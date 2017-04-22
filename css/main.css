@@ -1,0 +1,352 @@
+/* ==========================================================================
+   windreiten.ch
+   Lea Senn
+   ========================================================================== */
+
+html,
+button,
+input,
+select,
+textarea {
+    color: #222;
+    overflow-x: hidden;
+}
+
+html {
+    font-size: 1em;
+    line-height: 1.4;
+}
+
+body {
+    font-family: 'abeezeeregular', serif;
+    font-size: 16px;
+    margin:0px; 
+}
+
+.browsehappy { /* Wenn zu alter Browser... */
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
+}
+
+/* ==========================================================================
+   Container
+   ========================================================================== */
+
+/* Generell */
+#main {
+    position: relative;
+    background-color: white;
+    width:100%;
+    padding:0px;
+}
+
+.content-wrapper {
+    width: 90%;
+    margin: 0 auto;
+    max-width: 1140px;
+    position: relative;
+    z-index: 2;
+}
+
+h1 {
+    font-family: 'frente_h1regular';
+    font-size: 140px;
+    margin-bottom: 10px;
+}
+h2 {
+    font-family: 'frente_h1regular';
+    font-size: 42px;
+}
+
+/* Intro */
+#intro {
+    height: 90vh;
+    /*background: url("../img/windreiten-titelbild.gif");
+    background-repeat: no-repeat;
+    background-size: 100%;*/
+    text-align: center;
+    color: #fff;
+    
+}
+
+video#introVideo { 
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    background: url(../img/ballon.jpg) no-repeat;
+    background-size: cover; 
+}
+
+
+#videoOverlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    min-width: 100%;
+    min-height: 90vh;
+    opacity: 0.3;
+    z-index: -99;
+    background: repeating-linear-gradient(
+      -25deg,
+      #222,
+      #222 3px,
+      #333 3px,
+      #333 6px
+    );
+}
+
+#intro .content {
+    position: absolute;
+    top: 25%;
+    left: 60%;
+    transform: translate(-50%, -50%);
+}
+
+p.headline {
+    margin-top: 10px; /* damit näher an Titel */
+    padding-left: 50px;
+}
+
+#pfeil {
+    position: absolute;
+    top:80%;
+    left:50%;
+    
+    animation: jump 2s infinite;
+    animation-delay: 3s;
+}
+
+@keyframes jump {
+  0%, 20%, 50%, 80%, 100% {
+     top:80%;
+  }
+	40% {
+    top:72%;
+  }
+	60% {
+    top:75%;
+  }
+}
+}
+
+/* Team */
+#team {
+    width:80%;
+}
+.team {
+    text-align: center;
+/*    opacity: 0;
+    transform: translateY(50px);
+    transition: all 1s ease-out;*/
+}
+
+.team img {
+    margin-bottom: 30px;
+}
+
+.team.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Wetter */
+#wetter {
+    margin-top: 50px;
+    min-height:500px;
+}
+#wetterdaten {
+    float:left;
+    width: 500px;
+}
+#wetterdaten ul {
+    list-style-type: none;
+    padding-left: 0px;
+}
+#wetterdaten ul li {
+    padding-left: 0px;
+    margin-bottom: 10px;
+}
+#tacho-komp {
+    background: url("../img/Tacho-bg.png");
+    background-repeat: no-repeat;
+}
+
+#tacho-img {
+    position: relative;
+    left: -40px;
+    top: 150px;
+    transform-origin: 90% 50%;
+    transform: rotate(0deg);
+    
+    animation-name: spin;
+    animation-duration: 4000ms;
+    animation-iteration-count: 1;
+    animation-timing-function: ease;
+}
+
+@keyframes spin2 { from { transform:rotate(0deg); } to { transform:rotate(35deg); }}
+@keyframes spin1 { from { transform:rotate(0deg); } to { transform:rotate(90deg); }}
+@keyframes spin0 { from { transform:rotate(0deg); } to { transform:rotate(145deg); }}
+
+/* Sections */
+.section100 { /* Fullscreen Text & Fotos */
+    min-height:90vh;
+    padding: 100px;
+}
+.section101 { /* Fullscreen Videos */
+    height:100vh;
+    /*background-color: #353535;*/
+}
+
+.section102 { /* Fullscreen Text & Fotos > inverted */
+    height:90vh;
+    padding: 100px;
+    background-color: #353535;
+    color:white;
+}
+
+/* Wettbewerb Formular */
+/*label.col-lg-3 {
+    padding-left:0px;
+    font-family: 'abeezeeregular', serif;
+    font-size: 16px;   
+    font-weight: 100;
+}
+
+.form-control {
+    width: 100px;
+}
+
+div.col-lg-9 {
+    margin-bottom: 5px;
+    padding-left: 0px;
+}*/
+
+/* ==========================================================================
+   Fonts
+   ========================================================================== */
+/* Fliesstext */
+@font-face {
+    font-family: 'abeezeeregular';
+    src: url('../fonts/abeezee-regular-webfont.woff2') format('woff2'),
+         url('../fonts/abeezee-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+/* Überschriften */
+@font-face {
+    font-family: 'frente_h1regular';
+    src: url('../fonts/FrenteH1-Regular-webfont.eot');
+    src: url('../fonts/FrenteH1-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/FrenteH1-Regular-webfont.woff') format('woff'),
+         url('../fonts/FrenteH1-Regular-webfont.ttf') format('truetype'),
+         url('../fonts/FrenteH1-Regular-webfont.svg#frente_h1regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+/* ==========================================================================
+   Media Queries
+   ========================================================================== */
+
+@media only screen and (min-width: 480px) {
+    /* =General */
+
+    /* =Header */
+
+    /* =Footer */
+}
+
+@media only screen and (min-width: 768px) {
+    /* =General */
+
+    /* =Header */
+
+    /* =Footer */
+}
+
+@media only screen and (min-width: 1140px) {
+    /* =General */
+
+    /* =Header */
+
+    /* =Footer */
+}
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+.ir {
+    background-color: transparent;
+    border: 0;
+    overflow: hidden;
+    *text-indent: -9999px;
+}
+
+.ir:before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 150%;
+}
+
+.hidden {
+    display: none !important;
+    visibility: hidden;
+}
+
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix {
+    *zoom: 1;
+}

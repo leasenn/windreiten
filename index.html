@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>windreiten - Faszination Heissluftballon</title>
+        <meta name="description" content="Faszination Heissluftballon in 360°, Video und Sound! Eine Webdokumentation rund ums Thema Heissluftballonfahrt.">
+        <meta name="keywords" content="Heissluftballon, Aussicht, Schweiz, Berge, Mittelland, Webdokumentation, Technik, Wetter, 360°, Virtual Reality, Video, Audio">
+        <meta name="author" content="Lea Senn">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed" rel="stylesheet"> 
+        
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <link href="css/main.css" rel="stylesheet">
+
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        
+        <div id="intro">
+            <div class="content">
+                <h1>windreiten</h1>
+                <p class="headline">Faszination Heissluftballon</p>
+            </div>
+            <img id="pfeil" src="img/Pfeil.png" alt="pfeil">
+            <div id="videoOverlay"></div>
+            <video playsinline autoplay muted loop id="introVideo">
+                <source src="img/Background-Video.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <div id="main">
+            <div id="01-intro" class="section100">
+                <h2>Faszinierende Welt von oben</h2>
+                <p>St&auml;dte, Seen und Berge im Miniaturformat. Der Ballon, der vom Wind davongetragen wird. Die Sorgen bleiben am Boden. <br><br>
+                Piloten aus aller Welt teilen die Leidenschaft der Heissluftballonfahrt. Auch die Schweiz bietet mit abwechslungsreicher Landschaft und ballontauglichen Wetterbedingungen praktisch &uuml;bers ganze Jahr die M&ouml;glichkeit, mit einem Ballon im Wind zu reiten. Tauche f&uuml;r einige Minuten in diese Welt ein und erlebe die Faszination in Video, Sound und 360°. F&uuml;r das beste Erlebnis entdecke diese Seite mit Kopfh&ouml;rern.
+                <br><br>
+                Hier einige Bilder von Heissluftballon
+                    <button id="scrollto">Scrollen</button>
+                </p>
+            </div>
+            
+            <div id="02-vorstellung" class="section101">
+                <div id="yt-vorstellung-intro"></div>
+            </div>
+
+            <div id="03-team" class="section100">
+                <h2>Das Team</h2>
+                <div id="team" class="row">
+                    <div id="team-pilot" class="team col-xs-12 col-lg-4">
+                        <img src="img/portrait_pilot.png" alt="Pilot">
+                        <h3>Der Pilot</h3>
+                        <p>Stefan W&auml;lchli ist Ballonpilot seit 1994 und nutzt jede Gelegenheit, um die Welt von oben zu geniessen.</p>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#btnPilotvideo">
+                            Video ansehen
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="btnPilotvideo" tabindex="-1" role="dialog" aria-labelledby="pilotvideolabel" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-body">
+                                Video kommt hier
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="team col-xs-12 col-lg-4">
+                        <img src="img/portrait_passagier.png" width=300 height=300 alt="Passagier">
+                        <h3>Die Passagierin</h3>
+                        <p>Hanna Meier hat die Ballonfahrt zum Geburtstag geschenkt bekommen und kann nicht genug davon kriegen.</p>
+                    </div>
+                    <div class="team col-xs-12 col-lg-4">
+                        <img src="img/portrait_verfolger.png" alt="Verfolger">
+                        <h3>Der Verfolger</h3>
+                        <p>Greg Schaad beobachtet die Crew in der Luft gekonnt und bringt sie sicher wieder zum Startpunkt zur&uuml;ck.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="04-wetter" class="section102">
+                <h2>Das Wetter</h2>
+                <div id="wetter" class="row">
+                    <div id="wetterdaten" class="col-xs-12 col-md-6">Wetterdaten werden geladen...</div>
+                    <div id="tacho-komp" class="col-xs-12 col-md-6">
+                        <img id="tacho-img" src="img/Tacho.png" alt="Tacho">
+                    </div>
+                </div>
+            </div>
+            <div id="05-fahrt" class="section101">
+                <div id="yt-vorstellung-360"></div>
+                <h2></h2>
+            </div>
+            <div id="06-wettbewerb" class="section100">
+                <h2>Gewinne eine Ballonfahrt für 2 Personen</h2>
+                <p>Mach an unserem Wettbewerb mit und gewinne eine unvergessliche Ballonfahrt. <br>
+                    Die Verlosung findet am 18. Juni 2017 im Toni-Areal, Zürich statt.</p>
+                <div class="container">
+                    <div class="row">
+                        <label for="vorname" class="col-lg-3">Vorname</label>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" placeholder="Max" aria-describedby="Vorname" name="vorname" id="vorname">
+                        </div>
+                    </div>
+                                   
+                    <div class="row">     
+                        <label for="name" class="col-lg-3">Name</label>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" placeholder="Muster" aria-describedby="Name" name="name" id="name">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <label for="adresse" class="col-lg-3">Adresse</label>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" placeholder="Musterstrasse 8" aria-describedby="Adresse" name="adresse" id="adresse">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <label for="plz" class="col-lg-3">PLZ</label>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" placeholder="1234" aria-describedby="PLZ" name="plz" id="plz">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <label for="ort" class="col-lg-3">Ort</label>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" placeholder="Musterhausen" aria-describedby="Ort" name="ort" id="ort">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <label for="land" class="col-lg-3">Land</label>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" placeholder="Schweiz" aria-describedby="Land" name="land" id="land">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <label for="email" class="col-lg-3">E-Mail</label>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" placeholder="max@mustermann.ch" aria-describedby="E-Mail" name="email" id="email">
+                        </div>
+                    </div>
+                    
+                    <button type="button" id="wettbewerbabschicken" class="btn btn-default">Mitmachen</button>
+                </div>
+            </div>
+
+            <div id="07-impressum" class="section100">
+                <h2>Impressum</h2>
+                <p>
+                    Diese Webseite entsteht im Rahmen der Bachelorarbeit von <a href="http://www.leasenn.ch">Lea Senn</a>.
+                    <br><br>
+                    Lea Senn<br>
+                    Burgunderweg 4<br>
+                    5312 Döttingen<br>
+                    <a href="http://www.leasenn.ch">www.leasenn.ch</a>
+                </p>
+                <div>
+                    <h3>Danke</h3>
+                    <p>Besten Dank an den <a href="https://ballonpilot.ch/">Ballonpiloten Stefan Wälchli</a>.</p>
+                    <p>Weiterer Dank geb&uuml;hrt den beiden Protagonisten Georg Schaad und .... Danke an das ganze Team von Cast / Audiovisuelle Medien der Z&uuml;rcher Hochschule der K&uuml;nste, besonders meinen Mentoren Marc LePetit, den Filmmusikkomponisten Wolfram Gruss, Kamerafrau Valentina Sproge und allen Freunden, f&uuml;r ihre Feedbacks und Geduld.</p>
+                </div>
+            </div>
+
+        </div> <!-- #main-container -->
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/jquery-3.2.1.min.js"><\/script>')</script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/ScrollMagic.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/debug.addIndicators.min.js"></script>
+
+        <!-- GreenSock TweenMax -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/TweenMax.min.js"></script>
+        <!-- ScrollMagic GreenSock Plugin -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/animation.gsap.js"></script>
+
+        <script src="js/main.js"></script>
+        <script src="js/bootstrap.js"></script>
+
+    </body>
+</html>
