@@ -58,6 +58,7 @@ h1 {
 h2 {
     font-family: 'frente_h1regular';
     font-size: 42px;
+    margin-bottom: 40px;
 }
 
 /* Intro */
@@ -140,9 +141,13 @@ p.headline {
 }
 }
 
+#logotop {
+    width: 40%;
+}
+
 /* Team */
 #team {
-    width:80%;
+    width:100%;
 }
 .team {
     text-align: center;
@@ -158,6 +163,17 @@ p.headline {
 .team.fade-in {
     opacity: 1;
     transform: translateY(0);
+}
+.modal {
+}
+#team .modal-dialog, .modal-content {
+    width:1150px;
+    height:660px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -560px;
+    margin-top: -315px;
 }
 
 /* Wetter */

@@ -17,8 +17,9 @@ $(document).ready(function(){
     // Initialisiere Controller
     var controller = new ScrollMagic.Controller();
     
-    // Intro anpinnen
     if(!is_touch_device()) {
+        
+        // Intro anpinnen
         var pinIntroScene = new ScrollMagic.Scene({
             triggerElement: '#intro',
             triggerHook: 0, 
@@ -26,7 +27,22 @@ $(document).ready(function(){
         })
         .setPin('#intro', {pushFollowers: false})
         .addTo(controller);
+        
+        $("#introVideo").get(0).play(); // http://stackoverflow.com/questions/28532539
+        
+        // Introtext einfaden
+        
     }
+    
+    // Scrollfunktionen / Navigation
+    controller.scrollTo(function (newScrollPos) {
+        $("html, body").animate({scrollTop: newScrollPos});
+    });
+    
+    $("#intro").click(function() {
+        controller.scrollTo("#main");
+        
+    });
     
     $("#wettbewerbabschicken").click(function() {
         $.ajax({
@@ -50,8 +66,67 @@ $(document).ready(function(){
             }
         });
     });
+    
+    
+    //********************************************
+    // Modals aktivieren und YouTube Video laden
+    //********************************************
+    // Pilot
+    $("#iframePilot").attr('src', '');
+    $("#mdlPilot").on('hide.bs.modal', function() {
+        $("#iframePilot").attr('src', '');
+    })      
+    $("#mdlPilot").on('show.bs.modal', function() {
+        $("#iframePilot").attr('src', 'https://www.youtube.com/embed/e7oC06sLGfc?autoplay=1');
+    })
+    
+    // Passagier
+    $("#iframePassagier").attr('src', '');
+    $("#mdlPassagier").on('hide.bs.modal', function() {
+        $("#iframePassagier").attr('src', '');
+    })    
+    $("#mdlPassagier").on('show.bs.modal', function() {
+        $("#iframePassagier").attr('src', 'https://www.youtube.com/embed/pi7tNUuuzvA?autoplay=1');
+    })
+    
+    // Verfolger
+    $("#iframeVerfolger").attr('src', '');
+    $("#mdlVerfolger").on('hide.bs.modal', function() {
+        $("#iframeVerfolger").attr('src', '');
+    })    
+    $("#mdlVerfolger").on('show.bs.modal', function() {
+        $("#iframeVerfolger").attr('src', 'https://www.youtube.com/embed/2B2EQRy2ScU?autoplay=1');
+    })
+    
 });
 
+//********************************************
+// Team Abschnitt interaktiv
+//********************************************
+$(".teamimage").hover(function() {
+    var originalsrc = $(this).attr('src').slice(0,-4); // Add _hover
+    $(this).attr('src', originalsrc+'_hover.png');
+}, function() {
+    var originalsrc = $(this).attr('src').slice(0,-10); // Remove _hover
+    $(this).attr('src', originalsrc+'.png');
+});
+
+$(".teamimage").click(function() {
+    //console.log($(this).nextAll('.modal'));
+    $(this).nextAll('.modal').modal('show');
+});
+
+// Modale Dialoge zentrieren horizontal
+/*$('.modal').each(function(){
+    $(this).modal('show').css({
+        'margin-top': function () { //vertical centering
+            return -($(this).height() / 2);
+        },
+        'margin-left': function () { //Horizontal centering
+            return -($(this).width() / 2);
+        }
+    });
+});*/
 
 //********************************************
 // YouTube Videos einbinden
@@ -73,7 +148,7 @@ function onYouTubePlayerAPIReady() {
             autoplay : 0
             /*controls : 0, später wieder einschalten!*/
         },
-      videoId: 'ULDyGXD-wu4'
+      videoId: 'XsEItOvDZzE'
     });
         
     player360 = new YT.Player('yt-vorstellung-360', {
@@ -84,7 +159,7 @@ function onYouTubePlayerAPIReady() {
             autoplay : 0
             /*controls : 0, später wieder einschalten!*/
         },
-      videoId: 'DxpkRwpC4h4'
+      videoId: 'H8IkgYsWGhg'
     });
     
     
@@ -99,22 +174,18 @@ $(window).scroll(function() {
     // Video Intro beim Vorbeiscrollen automatisch starten und stoppen
     $("iframe#yt-vorstellung-intro").each( function() {
         if( ($(window).scrollTop() > $(this).offset().top - 200) && ($(window).scrollTop() < $(this).offset().top + 300) ) { // Solange Video in sichtbaren Bereich: abspielen
-            $(this).css('opacity',1);
             player.playVideo();
         } else { // Wenn Video ausserhalb von sichtbaren Bereich: stoppen
-            $(this).css('opacity',0);
-            player.stopVideo();
+            player.pauseVideo();
         }
     }); 
     
     // Video 360 beim Vorbeiscrollen automatisch starten und stoppen
     $("iframe#yt-vorstellung-360").each( function() {
         if( ($(window).scrollTop() > $(this).offset().top - 200) && ($(window).scrollTop() < $(this).offset().top + 300) ) { // Solange Video in sichtbaren Bereich: abspielen
-            $(this).css('opacity',1);
             player360.playVideo();
         } else { // Wenn Video ausserhalb von sichtbaren Bereich: stoppen
-            $(this).css('opacity',0);
-            player360.stopVideo();
+            player360.pauseVideo();
         }
     }); 
     
@@ -129,20 +200,6 @@ $(window).scroll(function() {
 
 
 //********************************************
-// Modals aktivieren und YouTube Video laden
-//********************************************
-/*$('#btnPilotvideo').click(function () {
-        console.log("Button geklickt");
-        var src = 'http://www.youtube.com/v/https://youtu.be/2B2EQRy2ScU&amp;autoplay=1';
-        $('#mdlPilot').modal('show');
-        $('#mdlPilot iframe').attr('src', src);
-    });
-
-    $('#myModal button').click(function () {
-        $('#mdlPilot iframe').removeAttr('src');
-    });*/
-
-//********************************************
 // Wetter berechnen
 //********************************************
 function berechneWetter() {
@@ -155,7 +212,7 @@ function berechneWetter() {
             units: "metric",
             id: '7287650', // ID von Zürich Stadt
             lang: 'de',
-            APPID: "a9fb7b1bd2ebc0438c97fae9a24ff62c"
+            APPID: "cb1bd4d3e7ff8998307ff5883a6c8382"
         },
         success: function(data) { // Wenn erfolgreich Daten zurück kommen...
             var liste = document.createElement("ul");
@@ -164,6 +221,7 @@ function berechneWetter() {
             $(liste).append('<li>Temperatur: ' + data.main.temp + ' °C</li>');
             $(liste).append('<li>Bewölkung: ' + data.clouds.all + ' %</li>');
             $(liste).append(berechneWind(data.wind));
+            $(liste).append(berechneDunkelheit(data.sys.sunrise, data.sys.sunset));
             $(liste).append('<li>Wetterlage: ' + data.weather[0].description + '</li>');
             $("#wetterdaten").empty(); // Lösche Text "Lade Wetterdaten..."
             $("#wetterdaten").append($(liste));
@@ -190,6 +248,12 @@ function berechneWind(wind) {
         output += '<li>Windstärke: ' + Math.round((wind.speed*3.6)*10)/10 + ' km/h</li>';
     }
     return output;
+}
+
+// Berechen Dunkelheit
+function berechneDunkelheit(sunrise, sunset) {
+    sunrise = new Date(1492835036*1000);
+    console.log(sunrise.toLocaleString());
 }
 
 // Berechne Windrichtung in Text aufgrund von Grad

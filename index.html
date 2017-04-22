@@ -38,13 +38,24 @@
 
         <div id="main">
             <div id="01-intro" class="section100">
-                <h2>Faszinierende Welt von oben</h2>
-                <p>St&auml;dte, Seen und Berge im Miniaturformat. Der Ballon, der vom Wind davongetragen wird. Die Sorgen bleiben am Boden. <br><br>
-                Piloten aus aller Welt teilen die Leidenschaft der Heissluftballonfahrt. Auch die Schweiz bietet mit abwechslungsreicher Landschaft und ballontauglichen Wetterbedingungen praktisch &uuml;bers ganze Jahr die M&ouml;glichkeit, mit einem Ballon im Wind zu reiten. Tauche f&uuml;r einige Minuten in diese Welt ein und erlebe die Faszination in Video, Sound und 360°. F&uuml;r das beste Erlebnis entdecke diese Seite mit Kopfh&ouml;rern.
-                <br><br>
-                Hier einige Bilder von Heissluftballon
-                    <button id="scrollto">Scrollen</button>
-                </p>
+                <h2 id="h2Intro">Faszinierende Welt von oben</h2>
+                    <div class="row">
+                        <div class="col col-xs-12 col-lg-6">
+                            <p id="pIntrotext">
+                                St&auml;dte, Seen und Berge im Miniaturformat. Der Ballon, der vom Wind davongetragen wird. Die Sorgen bleiben am Boden. 
+                            </p>
+                            <p>
+                                Piloten aus aller Welt teilen die Leidenschaft der Heissluftballonfahrt. Auch die Schweiz bietet mit abwechslungsreicher Landschaft und ballontauglichen Wetterbedingungen praktisch &uuml;bers ganze Jahr die M&ouml;glichkeit, mit einem Ballon im Wind zu reiten. Tauche f&uuml;r einige Minuten in diese Welt ein und erlebe die Faszination in Video, Sound und 360°. 
+                            </p>
+                            <p>
+                                F&uuml;r das beste Erlebnis entdecke diese Seite mit Kopfh&ouml;rern.
+                            </p>
+                        </div>
+                        <div id="logotop" class="col col-xs-12 col-lg-6">
+                            <img src="img/LogoWindreiten-transparent.png" alt="Logo Windreiten">
+                        </div>
+                    </div>
+                
             </div>
             
             <div id="02-vorstellung" class="section101">
@@ -55,33 +66,61 @@
                 <h2>Das Team</h2>
                 <div id="team" class="row">
                     <div id="team-pilot" class="team col-xs-12 col-lg-4">
-                        <img src="img/portrait_pilot.png" alt="Pilot">
+                        <img class="teamimage" src="img/portrait_pilot.png" alt="Pilot">
                         <h3>Der Pilot</h3>
                         <p>Stefan W&auml;lchli ist Ballonpilot seit 1994 und nutzt jede Gelegenheit, um die Welt von oben zu geniessen.</p>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#btnPilotvideo">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlPilot">
                             Video ansehen
                         </button>
 
                         <!-- Modal -->
-                        <div class="modal fade" id="btnPilotvideo" tabindex="-1" role="dialog" aria-labelledby="pilotvideolabel" aria-hidden="true">
+                        <div id="mdlPilot" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="pilotvideolabel" aria-hidden="true">
                           <div class="modal-dialog" role="document">
                             <div class="modal-content">
                               <div class="modal-body">
-                                Video kommt hier
+                                <iframe id="iframePilot" width="1120" height="630" src="https://www.youtube.com/embed/e7oC06sLGfc?autoplay=1" frameborder="0" allowfullscreen></iframe>
                               </div>
                             </div>
                           </div>
                         </div>
                     </div>
                     <div class="team col-xs-12 col-lg-4">
-                        <img src="img/portrait_passagier.png" width=300 height=300 alt="Passagier">
+                        <img class="teamimage" src="img/portrait_passagier.png" alt="Passagier">
                         <h3>Die Passagierin</h3>
-                        <p>Hanna Meier hat die Ballonfahrt zum Geburtstag geschenkt bekommen und kann nicht genug davon kriegen.</p>
+                        <p>Andrea Stefan war mit ihren beiden T&ouml;chtern im Ballonkorb und landete 100m neben ihrem Haus.</p>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlPassagier">
+                            Video ansehen
+                        </button>
+
+                        <!-- Modal -->
+                        <div id="mdlPassagier" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="passagiervideolabel" aria-hidden="true">
+                          <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                              <div class="modal-body">
+                                <iframe id="iframePassagier" width="1120" height="630" src="https://www.youtube.com/embed/pi7tNUuuzvA?autoplay=1" frameborder="0" allowfullscreen></iframe>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                     </div>
                     <div class="team col-xs-12 col-lg-4">
-                        <img src="img/portrait_verfolger.png" alt="Verfolger">
+                        <img class="teamimage" src="img/portrait_verfolger.png" alt="Verfolger">
                         <h3>Der Verfolger</h3>
-                        <p>Greg Schaad beobachtet die Crew in der Luft gekonnt und bringt sie sicher wieder zum Startpunkt zur&uuml;ck.</p>
+                        <p>Greg Schaad beobachtet die Crew in der Luft gekonnt und bringt sie sicher wieder zur&uuml;ck zum Startpunkt.</p>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlVerfolger">
+                            Video ansehen
+                        </button>
+
+                        <!-- Modal -->
+                        <div id="mdlVerfolger" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="verfolgervideolabel" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-body">
+                                <iframe id="iframeVerfolger" width="1120" height="630" src="https://www.youtube.com/embed/2B2EQRy2ScU?autoplay=1" frameborder="0" allowfullscreen></iframe>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -170,7 +209,7 @@
                 <div>
                     <h3>Danke</h3>
                     <p>Besten Dank an den <a href="https://ballonpilot.ch/">Ballonpiloten Stefan Wälchli</a>.</p>
-                    <p>Weiterer Dank geb&uuml;hrt den beiden Protagonisten Georg Schaad und .... Danke an das ganze Team von Cast / Audiovisuelle Medien der Z&uuml;rcher Hochschule der K&uuml;nste, besonders meinen Mentoren Marc LePetit, den Filmmusikkomponisten Wolfram Gruss, Kamerafrau Valentina Sproge und allen Freunden, f&uuml;r ihre Feedbacks und Geduld.</p>
+                    <p>Weiterer Dank geb&uuml;hrt den Protagonisten Georg Schaad, Andrea Stefan und Annekatrin Stefan. Danke an das ganze Team von Cast / Audiovisuelle Medien der Z&uuml;rcher Hochschule der K&uuml;nste, meinen Mentoren Marc LePetit, die Filmmusikkomponisten Wolfram Gruss und Louis Edlinger, 360°-Berater Matthias Taugwalder, Kamerafrau Valentina Sproge und allen Freunden, f&uuml;r ihre Feedbacks und Geduld.</p>
                 </div>
             </div>
 
