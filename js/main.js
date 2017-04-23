@@ -191,10 +191,13 @@ $(window).scroll(function() {
     
     // Prüfen, ob Tacho im sichtbaren Bereich ist
     //console.log("window scrolltop: "+$(window).scrollTop()+" wettertop: "+$("#wetter").offset().top);
-    if( ($(window).scrollTop() > $("#wetter").offset().top - 300)) {
+    if( ($(window).scrollTop() > $("#wetter").offset().top - 400 && $(window).scrollTop() < $("#wetter").offset().top + 300)) {
         if($('#tacho-img').css("animation-name") == "spin") { // solange noch Standardwert
             berechneWetter(); // berechne einmalig das Wetter
         }
+        $("#audioWetter").trigger('play');
+    } else {
+        $("#audioWetter").trigger('pause');
     }
 });
 

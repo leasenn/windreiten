@@ -192,7 +192,7 @@ p.headline {
 
 #wetterdaten li {
     padding-left: 44px;
-    padding-top: 3px;
+    padding-top: 8px;
     height: 54px;
 }
 #wetterdaten .li0 {
@@ -226,6 +226,11 @@ p.headline {
 @keyframes spin2 { from { transform:rotate(0deg); } to { transform:rotate(35deg); }}
 @keyframes spin1 { from { transform:rotate(0deg); } to { transform:rotate(90deg); }}
 @keyframes spin0 { from { transform:rotate(0deg); } to { transform:rotate(145deg); }}
+
+#audioWetter {
+    width:100%;
+    background-color: black;
+}
 
 /* Sections */
 .section100 { /* Fullscreen Text & Fotos */
