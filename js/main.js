@@ -215,17 +215,27 @@ function berechneWetter() {
             APPID: "cb1bd4d3e7ff8998307ff5883a6c8382"
         },
         success: function(data) { // Wenn erfolgreich Daten zurück kommen...
-            var liste = document.createElement("ul");
+            // Liste erstellen
             var date = new Date(data.dt*1000);
-            $(liste).append('<li>Das Wetter für Zürich vom ' + date.getDate() + "." + (date.getMonth()+1) +"." + date.getFullYear() + " um " + date.getHours() + ":" + date.getMinutes() + ' Uhr</li>');
-            $(liste).append('<li>Temperatur: ' + data.main.temp + ' °C</li>');
-            $(liste).append('<li>Bewölkung: ' + data.clouds.all + ' %</li>');
-            $(liste).append(berechneWind(data.wind));
-            $(liste).append(berechneDunkelheit(data.sys.sunrise, data.sys.sunset));
-            $(liste).append('<li>Wetterlage: ' + data.weather[0].description + '</li>');
-            $("#wetterdaten").empty(); // Lösche Text "Lade Wetterdaten..."
-            $("#wetterdaten").append($(liste));
             
+            // Wettermeta in Statusabsatz
+            $("#wetterStatus").html('Das Wetter für Zürich vom ' + date.getDate() + "." + (date.getMonth()+1) +"." + date.getFullYear() + " um " + date.getHours() + ":" + date.getMinutes() + ' Uhr');
+            
+            // Wetterinfo ausfüllen
+            $("#wetterInfo").append('<li class="li0">Temperatur: ' + data.main.temp + ' °C</li>');
+            
+            bewoelkung = berechneBewoelkung(data.clouds.all);
+            $("#wetterInfo").append('<li class="li' + bewoelkung + '">Bewölkung: ' + data.clouds.all + ' %</li>');
+            
+            
+            $("#wetterInfo").append(berechneWind(data.wind));
+            
+            var dunkelheit = berechneDunkelheit(data.sys.sunrise, data.sys.sunset);
+            $("#wetterInfo").append('<li class="li' + dunkelheit[0] + '">Tageslicht: ' + dunkelheit[1] + '</li>');
+            
+            var niederschlag = berechneNiederschlag(data.weather[0].id);
+            $("#wetterInfo").append('<li class="li' + niederschlag + '">Wetterlage: ' + data.weather[0].description + '</li>');
+
             // Finale Entscheidung als Text einblenden
             var entscheidung = berechneTacho(data);
             if(entscheidung == 0) { $("#wetterdaten").append("Eine Ballonfahrt scheint zurzeit möglich."); }
@@ -242,18 +252,38 @@ function berechneWetter() {
 function berechneWind(wind) {
     var output = "";
     if(wind.deg !== undefined) {
-        output += '<li>Windrichtung: ' + wind.deg + '° (' + berechneRichtung(wind.deg) + ')</li>';
+        output += '<li class="li0">Windrichtung: ' + wind.deg + '° (' + berechneRichtung(wind.deg) + ')</li>';
     }
     if(wind.speed !== undefined) {
-        output += '<li>Windstärke: ' + Math.round((wind.speed*3.6)*10)/10 + ' km/h</li>';
+        windstaerke = berechneWindstaerke(wind.speed);
+        output += '<li class="li' + windstaerke + '">Windstärke: ' + Math.round((wind.speed*3.6)*10)/10 + ' km/h</li>';
     }
     return output;
 }
 
 // Berechen Dunkelheit
 function berechneDunkelheit(sunrise, sunset) {
-    sunrise = new Date(1492835036*1000);
-    console.log(sunrise.toLocaleString());
+    timestampNow = Date.now(); // Aktueller Timestamp in Millisekunden
+    // Wenn vor Sonnenuntergang
+    if(timestampNow < sunrise*1000-1800*1000) {
+        return [2, "Noch zu dunkel"];
+    }
+    else if(timestampNow >= sunrise*1000-1800*1000 && timestampNow < sunrise*1000) {
+        return [1, "Knapp schon genug hell"];
+    }
+    else if(timestampNow >= sunrise*1000 && timestampNow < sunset*1000 ) { // Sonne scheint
+        console.log(timestampNow+" und "+"OK");
+        return [0, "Genug hell"];
+    }
+    else if(timestampNow >= sunset*1000 && timestampNow < sunset*1000+1800*1000) {
+        return [1, "Knapp noch genug hell"];
+    }
+    else if(timestampNow >= sunset*1000+1800*1000) {
+        return [2, "Wieder zu dunkel"];
+    }
+    else {
+        console.log("Fehler beim Berechnen der Dunkelheit");
+    }
 }
 
 // Berechne Windrichtung in Text aufgrund von Grad
@@ -269,6 +299,27 @@ function berechneRichtung(deg) {
     else return "Windrichtung unbekannt"
 }
 
+// Berechne Bewölkung
+function berechneBewoelkung(bewoelkung) {
+    if(bewoelkung < 50) { return 0; }
+    else if(bewoelkung >= 50 && bewoelkung < 75) { return 1; }
+    else { return 2; }
+}
+
+// Berechne Windstärk
+function berechneWindstaerke(windstaerke) {
+    if(windstaerke < 2.22) { return 0; }
+    else if(windstaerke >= 2.22 && windstaerke < 3.33) { return 1; }
+    else { return 2; }
+}
+
+// Berechne Niederschlag
+function berechneNiederschlag(niederschlag) {
+    if(niederschlag >= 800 && niederschlag <= 803) { return 0; }
+    else if(niederschlag == 8004) { return 1; }
+    else { return 2; }
+}
+
 // Tatsächliche Berechnung, ob Ballonfahrt möglich ist
 function berechneTacho(data) {
     // wobei 0 = OK, 1 = EVT, 2 = NO
@@ -276,26 +327,20 @@ function berechneTacho(data) {
     var degree = 0;
     
     // Bewölkung abklären
-    var bewoelkung = 0;
-    if(data.clouds.all < 50) { bewoelkung = 0; }
-    else if(data.clouds.all >= 50 && data.clouds.all < 75) { bewoelkung = 1; }
-    else { bewoelkung = 2; }
+    var bewoelkung = berechneBewoelkung(data.clouds.all);
     
     // Windstärke abklären
-    var windstaerke = 0;
-    if(data.wind.speed < 2.22) { windstaerke = 0; }
-    else if(data.wind.speed >= 2.22 && data.wind.speed < 3.33) { windstaerke = 1; }
-    else { windstaerke = 2; }
+    var windstaerke = berechneWindstaerke(data.wind.speed);
     
     // Niederschlag abklären
-    var niederschlag = 0;
-    if(data.weather[0].id >= 800 && data.weather[0].id <= 803) { niederschlag = 0; }
-    else if(data.weather[0].id == 8004) { niederschlag = 1; }
-    else { niederschlag = 2; }
+    var niederschlag = berechneNiederschlag(data.weather[0].id);
+    
+    // Dunkelheit abklären
+    var dunkelheit = berechneDunkelheit(data.sys.sunrise, data.sys.sunset)[0];
     
     // Berechnung
-    if (bewoelkung+windstaerke+niederschlag == 0) {degree = 145; moeglichkeit = 0;}
-    else if (bewoelkung <= 1 && windstaerke <= 1 && niederschlag <= 1) {degree = 90; moeglichkeit = 1;}
+    if (bewoelkung+windstaerke+niederschlag+dunkelheit == 0) {degree = 145; moeglichkeit = 0;}
+    else if (bewoelkung <= 1 && windstaerke <= 1 && niederschlag <= 1 && dunkelheit <= 1) {degree = 90; moeglichkeit = 1;}
     else {degree = 35; moeglichkeit = 2;}
     
     $('#tacho-img').css("transform", "rotate("+degree+"deg)");

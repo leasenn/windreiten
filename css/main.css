@@ -189,10 +189,22 @@ p.headline {
     list-style-type: none;
     padding-left: 0px;
 }
-#wetterdaten ul li {
-    padding-left: 0px;
-    margin-bottom: 10px;
+
+#wetterdaten li {
+    padding-left: 44px;
+    padding-top: 3px;
+    height: 54px;
 }
+#wetterdaten .li0 {
+    background: url('../img/liOK.png') no-repeat left top;
+}
+#wetterdaten .li1 {
+    background: url('../img/liEVT.png') no-repeat left top;
+}
+#wetterdaten .li2 {
+    background: url('../img/liNO.png') no-repeat left top;
+}
+
 #tacho-komp {
     background: url("../img/Tacho-bg.png");
     background-repeat: no-repeat;
