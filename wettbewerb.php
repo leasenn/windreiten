@@ -58,68 +58,91 @@ if(($_POST["email"])) {
     $valid = false;
 }
 
+if($_POST["recaptcha"]) {
+    $recaptcha = $_POST["recaptcha"];
+} else {
+    $errorfields[] = "recaptcha";
+    $valid = false;
+}
+
 if(!$valid) {
     $output["success"] = 0;
     $output["message"] = "Fehlerhafte Eingabe: ".implode(", ", $errorfields);
     die(json_encode($output));
 }
+// Grab google recaptcha library
+require_once "php/recaptchalib.php";
+$secret = "6LfMZx4UAAAAALXj48xdU4eZ_u_uAWF3OW86BaHM";
+$response = null;
+$reCaptcha = new ReCaptcha($secret); // Checks if my secret key is present
 
-// Create connection
-$conn = mysqli_connect($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    $output["success"] = 0;
-    $output["message"] = "Verbindung zur Datenbank fehlgeschlagen: " . $conn->connect_error;
-    echo json_encode($output);
-    die();
+if ($recaptcha) {
+    $response = $reCaptcha->verifyResponse(
+        $_SERVER["REMOTE_ADDR"],
+        $recaptcha
+    );
 }
+if ($response != null && $response->success) { // When Recaptcha erfolgreich verlaufen ist
+
+    // Create connection
+    $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+    // Check connection
+    if ($conn->connect_error) {
+        $output["success"] = 0;
+        $output["message"] = "Verbindung zur Datenbank fehlgeschlagen: " . $conn->connect_error;
+        echo json_encode($output);
+        die();
+    }
 
 
-//mail already in db?
-$stmt = $conn->prepare("SELECT id FROM wettbewerb WHERE email = ?");
-$stmt->bind_param("s", $email);
-$stmt->execute();
-$result = $stmt->get_result();
+    //mail already in db?
+    $stmt = $conn->prepare("SELECT id FROM wettbewerb WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-if ($result->num_rows > 0) {
+    if ($result->num_rows > 0) {
+        // Close connection
+        $stmt->close();
+        mysqli_close($conn);
+
+        $output["success"] = 0;
+        $output["message"] = "Jemand hat schon mit dieser E-Mailadresse am Wettbewerb teilgenommen.";
+        echo json_encode($output);
+        die();
+    }
+
+
+
+    //insert
+    // prepare and bind
+    $stmt2 = $conn->prepare("INSERT INTO wettbewerb (vorname, name, adresse, plz, ort, land, email) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt2->bind_param("sssisss", $vorname, $name, $adresse, $plz, $ort, $land, $email);
+
+    // set parameters and execute
+    if($stmt2->execute() === false) {
+        $output["success"] = 0;
+        $output["message"] = "Teilnahme konnte nicht erfasst werden. Bitte versuchen Sie es später nochmals.";
+        echo json_encode($output);
+        $stmt->close();
+        $stmt2->close();
+        mysqli_close($conn); 
+        die();
+    }
+
+
+
+
+    $output["success"] = 1;
+    $output["message"] = "Toll, ich wünsche dir viel Glück beim Gewinnspiel.";
+    echo json_encode($output);
+
     // Close connection
-    $stmt->close();
-    mysqli_close($conn);
-    
-    $output["success"] = 0;
-    $output["message"] = "Jemand hat schon mit dieser E-Mailadresse am Wettbewerb teilgenommen.";
-    echo json_encode($output);
-    die();
-}
-
-
-
-//insert
-// prepare and bind
-$stmt2 = $conn->prepare("INSERT INTO wettbewerb (vorname, name, adresse, plz, ort, land, email) VALUES (?, ?, ?, ?, ?, ?, ?)");
-$stmt2->bind_param("sssisss", $vorname, $name, $adresse, $plz, $ort, $land, $email);
-
-// set parameters and execute
-if($stmt2->execute() === false) {
-    $output["success"] = 0;
-    $output["message"] = "Teilnahme konnte nicht erfasst werden. Bitte versuchen Sie es später nochmals.";
-    echo json_encode($output);
-    $stmt->close();
+    /*$stmt->close();
     $stmt2->close();
-    mysqli_close($conn); 
-    die();
+    mysqli_close($conn); */
+} else {
+    echo json_encode("ReCaptcha war nicht erfolgreich.");
 }
-
-
-
-
-$output["success"] = 1;
-$output["message"] = "Toll, ich wünsche dir viel Glück.";
-echo json_encode($output);
-
-// Close connection
-/*$stmt->close();
-$stmt2->close();
-mysqli_close($conn); */
 ?> 

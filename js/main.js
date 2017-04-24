@@ -55,6 +55,7 @@ $(document).ready(function(){
                 ort: $("#ort").val(),
                 land: $("#land").val(),
                 email: $("#email").val(),
+                recaptcha: $("#g-recaptcha-response").val()
             },
             type: "POST",
             dataType: "json",
