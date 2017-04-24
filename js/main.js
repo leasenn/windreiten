@@ -139,16 +139,17 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 // YouTube Player in Platzhalter Intro & 360 einfüllen
 var player;
+//var scrollbasedPaused360 = false;
 function onYouTubePlayerAPIReady() {
     player = new YT.Player('yt-vorstellung-intro', {
-      height: '100%',
-      width: '100%',
-      playerVars : {
+        height: '100%',
+        width: '100%',
+        playerVars : {
             rel:0,
             autoplay : 0
             /*controls : 0, später wieder einschalten!*/
         },
-      videoId: 'XsEItOvDZzE'
+        videoId: 'XsEItOvDZzE'
     });
         
     player360 = new YT.Player('yt-vorstellung-360', {
@@ -169,23 +170,80 @@ function onYouTubePlayerAPIReady() {
 //********************************************
 // Elemente scrollbasiert auslösen
 //********************************************
+var shouldStartAgain = true;
+var enterTriggered = false;
+var leaveTriggered = false;
+var hasEverPlayed = false;
+
+var shouldStartAgain360 = true;
+var enterTriggered360 = false;
+var leaveTriggered360 = false;
+var hasEverPlayed360 = false;
+
+
 $(window).scroll(function() {
-    
     // Video Intro beim Vorbeiscrollen automatisch starten und stoppen
     $("iframe#yt-vorstellung-intro").each( function() {
-        if( ($(window).scrollTop() > $(this).offset().top - 200) && ($(window).scrollTop() < $(this).offset().top + 300) ) { // Solange Video in sichtbaren Bereich: abspielen
-            player.playVideo();
+        if( ($(window).scrollTop() > $(this).offset().top - 400) && ($(window).scrollTop() < $(this).offset().top + 300)) {
+            // on Enter
+            if(!enterTriggered) {
+                // Check if First time
+                console.log("Video visible!");
+                enterTriggered = true;
+                leaveTriggered = false;
+                
+                if(shouldStartAgain == true) {
+                    player.playVideo();
+                    hasEverPlayed = true;
+                }  
+            }
         } else { // Wenn Video ausserhalb von sichtbaren Bereich: stoppen
-            player.pauseVideo();
+            // on leave
+            if(!leaveTriggered) {
+                // Check if first time
+                console.log("Video not visible!");
+                leaveTriggered = true;
+                enterTriggered = false; // Jetzt musst du wieder neu triggern, weil Bild verlassen wurde! 
+
+                if((player.getPlayerState() == 1 || player.getPlayerState() == 3) || !hasEverPlayed) { // Läuft das Video gerade?
+                    shouldStartAgain = true;
+                } else {
+                    shouldStartAgain = false;
+                }
+                player.pauseVideo();  
+            }
+
         }
     }); 
     
     // Video 360 beim Vorbeiscrollen automatisch starten und stoppen
     $("iframe#yt-vorstellung-360").each( function() {
-        if( ($(window).scrollTop() > $(this).offset().top - 200) && ($(window).scrollTop() < $(this).offset().top + 300) ) { // Solange Video in sichtbaren Bereich: abspielen
-            player360.playVideo();
+        if( ($(window).scrollTop() > $(this).offset().top - 200) && ($(window).scrollTop() < $(this).offset().top + 300)) { // Solange Video in sichtbaren Bereich: abspielen
+            // on Enter
+            if(!enterTriggered360) {
+                enterTriggered360 = true;
+                leaveTriggered360 = false;
+                
+                if(shouldStartAgain360 == true) {
+                    player360.playVideo();
+                    hasEverPlayed360 = true;
+                }
+            }
+            
         } else { // Wenn Video ausserhalb von sichtbaren Bereich: stoppen
-            player360.pauseVideo();
+            // on Leave
+            if(!leaveTriggered360) {
+                leaveTriggered360 = true;
+                enterTriggered360 = false;
+                
+                if((player360.getPlayerState() == 1 || player360.getPlayerState() == 3) || !hasEverPlayed360) {
+                    shouldStartAgain360 = true;
+                } else {
+                    shouldStartAgain360 = false;
+                }
+                player360.pauseVideo();
+            }
+            
         }
     }); 
     
