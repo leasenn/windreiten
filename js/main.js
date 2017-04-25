@@ -30,8 +30,24 @@ $(document).ready(function(){
         
         $("#introVideo").get(0).play(); // http://stackoverflow.com/questions/28532539
         
-        // Introtext einfaden
+        // Intro einfaden
+        var fadeIntroScene = new ScrollMagic.Scene({
+            triggerElement: '#main',
+            triggerHook: 0.8
+        })
+        .setClassToggle('.introtext', 'fade-in') // Klasse 'fade-in' zu Team hinzufügen
+        .addIndicators()
+        .addTo(controller);
         
+        // Team einfaden
+        var tweenTeam = TweenMax.staggerTo('.team', 0.5, {y:0, opacity:1}, 0.1);
+        var pinTeamScene = new ScrollMagic.Scene({
+            triggerElement: '#team',
+            triggerHook: 0.7
+        })
+        .setTween(tweenTeam)
+        .addIndicators()
+        .addTo(controller);
     }
     
     // Scrollfunktionen / Navigation
@@ -78,7 +94,7 @@ $(document).ready(function(){
         $("#iframePilot").attr('src', '');
     })      
     $("#mdlPilot").on('show.bs.modal', function() {
-        $("#iframePilot").attr('src', 'https://www.youtube.com/embed/e7oC06sLGfc?autoplay=1');
+        $("#iframePilot").attr('src', 'https://www.youtube.com/embed/e7oC06sLGfc?autoplay=1&rel=0');
     })
     
     // Passagier
@@ -87,7 +103,7 @@ $(document).ready(function(){
         $("#iframePassagier").attr('src', '');
     })    
     $("#mdlPassagier").on('show.bs.modal', function() {
-        $("#iframePassagier").attr('src', 'https://www.youtube.com/embed/pi7tNUuuzvA?autoplay=1');
+        $("#iframePassagier").attr('src', 'https://www.youtube.com/embed/pi7tNUuuzvA?autoplay=1&rel=0');
     })
     
     // Verfolger
@@ -96,7 +112,7 @@ $(document).ready(function(){
         $("#iframeVerfolger").attr('src', '');
     })    
     $("#mdlVerfolger").on('show.bs.modal', function() {
-        $("#iframeVerfolger").attr('src', 'https://www.youtube.com/embed/2B2EQRy2ScU?autoplay=1');
+        $("#iframeVerfolger").attr('src', 'https://www.youtube.com/embed/2B2EQRy2ScU?autoplay=1&rel=0');
     })
     
 });
@@ -250,7 +266,7 @@ $(window).scroll(function() {
     
     // Prüfen, ob Tacho im sichtbaren Bereich ist
     //console.log("window scrolltop: "+$(window).scrollTop()+" wettertop: "+$("#wetter").offset().top);
-    if( ($(window).scrollTop() > $("#wetter").offset().top - 400 && $(window).scrollTop() < $("#wetter").offset().top + 300)) {
+    if( ($(window).scrollTop() > $("#wetter").offset().top - 600 && $(window).scrollTop() < $("#wetter").offset().top + 300)) {
         if($('#tacho-img').css("animation-name") == "spin") { // solange noch Standardwert
             berechneWetter(); // berechne einmalig das Wetter
         }

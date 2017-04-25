@@ -34,6 +34,17 @@ body {
    Container
    ========================================================================== */
 
+.introtext {
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: all 1s ease-out;
+}
+
+.introtext.fade-in {
+    opacity: 1;
+    transform: translateX(0px);
+}
+
 /* Generell */
 #main {
     position: relative;
@@ -115,6 +126,7 @@ video#introVideo {
 }
 
 p.headline {
+    font-size: 24px;
     margin-top: 10px; /* damit näher an Titel */
     padding-left: 50px;
 }
@@ -151,19 +163,14 @@ p.headline {
 }
 .team {
     text-align: center;
-/*    opacity: 0;
-    transform: translateY(50px);
-    transition: all 1s ease-out;*/
+    opacity: 0;
+    transform: translateY(30px);
 }
 
 .team img {
     margin-bottom: 30px;
 }
 
-.team.fade-in {
-    opacity: 1;
-    transform: translateY(0);
-}
 .modal {
 
 }
