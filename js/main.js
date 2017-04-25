@@ -197,6 +197,10 @@ var enterTriggered360 = false;
 var leaveTriggered360 = false;
 var hasEverPlayed360 = false;
 
+var shouldStartAgainWetter = true;
+var enterTriggeredWetter = false;
+var leaveTriggeredWetter = false;
+var hasEverPlayedWetter = false;
 
 $(window).scroll(function() {
     // Video Intro beim Vorbeiscrollen automatisch starten und stoppen
@@ -270,9 +274,31 @@ $(window).scroll(function() {
         if($('#tacho-img').css("animation-name") == "spin") { // solange noch Standardwert
             berechneWetter(); // berechne einmalig das Wetter
         }
-        $("#audioWetter").trigger('play');
+        if(!enterTriggeredWetter) {
+            console.log("Wetter sichtbar");
+            enterTriggeredWetter = true;
+            leaveTriggeredWetter = false;
+            
+            if(shouldStartAgainWetter) {
+                $("#audioWetter").trigger('play');
+                hasEverPlayedWetter = true;
+            }
+        }
+        
     } else {
-        $("#audioWetter").trigger('pause');
+        if(!leaveTriggeredWetter) {
+            console.log("Wetter unsichtbar");
+            leaveTriggeredWetter = true;
+            enterTriggeredWetter = false;
+            
+                console.log("Paused: "+$("#audioWetter")[0].paused+" und currentTime: "+$('#audioWetter')[0].currentTime);
+            if(!$("#audioWetter")[0].paused || !$("#audioWetter")[0].ended || 0 < $('#audioWetter')[0].currentTime || !hasEverPlayedWetter) { // Wenn Video läuft....
+                shouldStartAgainWetter = true;
+            }  else {
+                shouldStartAgainWetter = false;
+            }
+            $("#audioWetter").trigger('pause'); 
+        }
     }
 });
 
