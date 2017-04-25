@@ -7,7 +7,7 @@ $(document).ready(function(){
     
     // Prüfe, ob Touchdevice oder Desktop
    function isTouchDevice() {
-              console.log('ontouchstart' in window);
+        console.log('ontouchstart' in window);
         return 'ontouchstart' in window        
       || navigator.maxTouchPoints;
 
@@ -51,7 +51,17 @@ $(document).ready(function(){
         .setTween(tweenTeam)
         .addIndicators()
         .addTo(controller);
-    } // End Touchdevice
+    } else { // Ist Touchdevice
+
+        $(".modal").each(function() {
+            var videoUrl = $(this).find("iframe").attr('src');
+            console.log(this);
+            $(this).removeClass("modal fade");
+            $(this).removeAttr("tabindex role aria-hidden aria-labelledby");
+            $("button[data-target='#mdlPilot']").replaceWith('<iframe src="'+videoUrl+'" frameborder="0" allowfullscreen></iframe>');
+            $(this).remove();
+        });
+    }
     
     // Scrollfunktionen / Navigation
     controller.scrollTo(function (newScrollPos) {
@@ -95,28 +105,28 @@ $(document).ready(function(){
     $("#iframePilot").attr('src', '');
     $("#mdlPilot").on('hide.bs.modal', function() {
         $("#iframePilot").attr('src', '');
-    })      
+    });      
     $("#mdlPilot").on('show.bs.modal', function() {
         $("#iframePilot").attr('src', 'https://www.youtube.com/embed/e7oC06sLGfc?autoplay=1&rel=0');
-    })
+    });
     
     // Passagier
     $("#iframePassagier").attr('src', '');
     $("#mdlPassagier").on('hide.bs.modal', function() {
         $("#iframePassagier").attr('src', '');
-    })    
+    });    
     $("#mdlPassagier").on('show.bs.modal', function() {
         $("#iframePassagier").attr('src', 'https://www.youtube.com/embed/pi7tNUuuzvA?autoplay=1&rel=0');
-    })
+    });
     
     // Verfolger
     $("#iframeVerfolger").attr('src', '');
     $("#mdlVerfolger").on('hide.bs.modal', function() {
         $("#iframeVerfolger").attr('src', '');
-    })    
+    });    
     $("#mdlVerfolger").on('show.bs.modal', function() {
         $("#iframeVerfolger").attr('src', 'https://www.youtube.com/embed/2B2EQRy2ScU?autoplay=1&rel=0');
-    })
+    });
     
 });
 
@@ -132,8 +142,11 @@ $(".teamimage").hover(function() {
 });
 
 $(".teamimage").click(function() {
-    //console.log($(this).nextAll('.modal'));
     $(this).nextAll('.modal').modal('show');
+    console.log($(this).attr("id"));
+    var name = "#mdl"+$(this).attr("id").slice(3); // Herausfinden, welche Person geklickt wurde
+    console.log(name);
+    $(name).modal('show');
 });
 
 // Modale Dialoge zentrieren horizontal
@@ -212,7 +225,6 @@ $(window).scroll(function() {
             // on Enter
             if(!enterTriggered) {
                 // Check if First time
-                console.log("Video visible!");
                 enterTriggered = true;
                 leaveTriggered = false;
                 
@@ -225,7 +237,6 @@ $(window).scroll(function() {
             // on leave
             if(!leaveTriggered) {
                 // Check if first time
-                console.log("Video not visible!");
                 leaveTriggered = true;
                 enterTriggered = false; // Jetzt musst du wieder neu triggern, weil Bild verlassen wurde! 
 
@@ -272,13 +283,11 @@ $(window).scroll(function() {
     }); 
     
     // Prüfen, ob Tacho im sichtbaren Bereich ist
-    //console.log("window scrolltop: "+$(window).scrollTop()+" wettertop: "+$("#wetter").offset().top);
     if( ($(window).scrollTop() > $("#wetter").offset().top - 600 && $(window).scrollTop() < $("#wetter").offset().top + 300)) {
         if($('#tacho-img').css("animation-name") == "spin") { // solange noch Standardwert
             berechneWetter(); // berechne einmalig das Wetter
         }
         if(!enterTriggeredWetter) {
-            console.log("Wetter sichtbar");
             enterTriggeredWetter = true;
             leaveTriggeredWetter = false;
             
@@ -290,11 +299,9 @@ $(window).scroll(function() {
         
     } else {
         if(!leaveTriggeredWetter) {
-            console.log("Wetter unsichtbar");
             leaveTriggeredWetter = true;
             enterTriggeredWetter = false;
             
-                console.log("Paused: "+$("#audioWetter")[0].paused+" und currentTime: "+$('#audioWetter')[0].currentTime);
             if(!$("#audioWetter")[0].paused || !$("#audioWetter")[0].ended || 0 < $('#audioWetter')[0].currentTime || !hasEverPlayedWetter) { // Wenn Video läuft....
                 shouldStartAgainWetter = true;
             }  else {
@@ -379,7 +386,6 @@ function berechneDunkelheit(sunrise, sunset) {
         return [1, "Knapp schon genug hell"];
     }
     else if(timestampNow >= sunrise*1000 && timestampNow < sunset*1000 ) { // Sonne scheint
-        console.log(timestampNow+" und "+"OK");
         return [0, "Genug hell"];
     }
     else if(timestampNow >= sunset*1000 && timestampNow < sunset*1000+1800*1000) {
