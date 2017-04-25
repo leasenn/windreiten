@@ -6,8 +6,11 @@
 $(document).ready(function(){
     
     // Prüfe, ob Touchdevice oder Desktop
-   function is_touch_device() {
-        return 'ontouchstart' in window;
+   function isTouchDevice() {
+              console.log('ontouchstart' in window);
+        return 'ontouchstart' in window        
+      || navigator.maxTouchPoints;
+
     }
 
     //********************************************
@@ -17,7 +20,7 @@ $(document).ready(function(){
     // Initialisiere Controller
     var controller = new ScrollMagic.Controller();
     
-    if(!is_touch_device()) {
+    if(!isTouchDevice()) {
         
         // Intro anpinnen
         var pinIntroScene = new ScrollMagic.Scene({
@@ -48,7 +51,7 @@ $(document).ready(function(){
         .setTween(tweenTeam)
         .addIndicators()
         .addTo(controller);
-    }
+    } // End Touchdevice
     
     // Scrollfunktionen / Navigation
     controller.scrollTo(function (newScrollPos) {

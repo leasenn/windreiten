@@ -34,17 +34,6 @@ body {
    Container
    ========================================================================== */
 
-.introtext {
-    opacity: 0;
-    transform: translateX(-30px);
-    transition: all 1s ease-out;
-}
-
-.introtext.fade-in {
-    opacity: 1;
-    transform: translateX(0px);
-}
-
 /* Generell */
 #main {
     position: relative;
@@ -61,11 +50,6 @@ body {
     z-index: 2;
 }
 
-h1 {
-    font-family: 'frente_h1regular';
-    font-size: 140px;
-    margin-bottom: 10px;
-}
 h2 {
     font-family: 'frente_h1regular';
     font-size: 42px;
@@ -75,9 +59,6 @@ h2 {
 /* Intro */
 #intro {
     height: 90vh;
-    /*background: url("../img/windreiten-titelbild.gif");
-    background-repeat: no-repeat;
-    background-size: 100%;*/
     text-align: center;
     color: #fff;
     
@@ -118,13 +99,6 @@ video#introVideo {
     );
 }
 
-#intro .content {
-    position: absolute;
-    top: 25%;
-    left: 60%;
-    transform: translate(-50%, -50%);
-}
-
 p.headline {
     font-size: 24px;
     margin-top: 10px; /* damit näher an Titel */
@@ -161,20 +135,11 @@ p.headline {
 #team {
     width:100%;
 }
-.team {
-    text-align: center;
-    opacity: 0;
-    transform: translateY(30px);
-}
-
 .team img {
     margin-bottom: 30px;
+    margin-top: 30px;
 }
 
-.modal {
-
-}
-   
 #team .modal-content {
     width:1150px;        
 }
@@ -246,23 +211,6 @@ p.headline {
     background-color: black;
 }
 
-/* Sections */
-.section100 { /* Fullscreen Text & Fotos */
-    min-height:90vh;
-    padding: 100px;
-}
-.section101 { /* Fullscreen Videos */
-    height:100vh;
-    /*background-color: #353535;*/
-}
-
-.section102 { /* Fullscreen Text & Fotos > inverted */
-    height:90vh;
-    padding: 100px;
-    background-color: #353535;
-    color:white;
-}
-
 /* Wettbewerb Formular */
 .divWettbewerb {
     width:60%;
@@ -318,28 +266,106 @@ div.col-lg-9 {
    Media Queries
    ========================================================================== */
 
-@media only screen and (min-width: 480px) {
-    /* =General */
+/* Telefone */
+@media only screen and (max-width: 768px) { 
+    h1 {
+        font-family: 'frente_h1regular';
+        font-size: 80px;
+        margin-bottom: 10px;
+    }
+       
+    #intro .content {
+        position: absolute;
+        top: 25%;
+        left: 60%;
+        transform: translate(-50%, -50%);
+    }
+    
+    /* Sections */
+    .section100 { /* Fullscreen Text & Fotos */
+        min-height:90vh;
+        padding: 20px;
+    }
+    .section101 { /* Fullscreen Videos */
+        height:100vh;
+        /*background-color: #353535;*/
+    }
 
+    .section102 { /* Fullscreen Text & Fotos > inverted */
+        min-height:90vh;
+        padding: 20px;
+        background-color: #353535;
+        color:white;
+    }
+    
+    .team {
+        text-align: center;
+        opacity: 1;
+        transform: translateY(0px);
+    }
+    
+    .teamimage {
+        width:200px;
+    }
     /* =Header */
 
     /* =Footer */
 }
 
-@media only screen and (min-width: 768px) {
-    /* =General */
+/* Desktop */
+@media only screen and (min-width: 769px) {
+    h1 {
+        font-family: 'frente_h1regular';
+        font-size: 140px;
+        margin-bottom: 10px;
+    }
+      
+    #intro .content {
+        position: absolute;
+        top: 25%;
+        left: 60%;
+        transform: translate(-50%, -50%);
+    }
+    
+    /* Sections */
+    .section100 { /* Fullscreen Text & Fotos */
+        min-height:90vh;
+        padding: 100px;
+    }
+    .section101 { /* Fullscreen Videos */
+        height:100vh;
+        /*background-color: #353535;*/
+    }
 
-    /* =Header */
+    .section102 { /* Fullscreen Text & Fotos > inverted */
+        min-height:90vh;
+        padding: 100px;
+        background-color: #353535;
+        color:white;
+    }
+    
+    
+    
+    .introtext {
+        opacity: 0;
+        transform: translateX(-30px);
+        transition: all 1s ease-out;
+    }
 
-    /* =Footer */
-}
+    .introtext.fade-in {
+        opacity: 1;
+        transform: translateX(0px);
+    }
+    
+    .team {
+        text-align: center;
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    .teamimage {
+        width:300px;
+    }
 
-@media only screen and (min-width: 1140px) {
-    /* =General */
-
-    /* =Header */
-
-    /* =Footer */
 }
 
 /* ==========================================================================
