@@ -58,7 +58,8 @@ $(document).ready(function(){
             console.log(this);
             $(this).removeClass("modal fade");
             $(this).removeAttr("tabindex role aria-hidden aria-labelledby");
-            $("button[data-target='#mdlPilot']").replaceWith('<iframe src="'+videoUrl+'" frameborder="0" allowfullscreen></iframe>');
+            var selector = "button[data-target='#"+$(this).attr("id")+"']";
+            $(selector).replaceWith('<iframe src="'+videoUrl+'" frameborder="0" allowfullscreen></iframe>');
             $(this).remove();
         });
     }
