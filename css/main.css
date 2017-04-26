@@ -156,7 +156,7 @@ p.headline {
     min-height:500px;
 }
 #wetterdaten {
-    float:left;
+    /*float:left;*/
     /*width: 500px;*/
     padding-bottom: 30px;
 }
@@ -257,7 +257,7 @@ p.headline {
    ========================================================================== */
 
 /* Telefone */
-@media only screen and (max-width: 768px) { 
+@media only screen and (max-width: 991px) { 
     h1 {
         font-family: 'frente_h1regular';
         font-size: 80px;
@@ -303,13 +303,15 @@ p.headline {
     .teamimage {
         width:200px;
     }
-    /* =Header */
-
-    /* =Footer */
+    
+    .iframeTeam {
+        width:100%;
+        height:100%;
+    }
 }
 
 /* Desktop */
-@media only screen and (min-width: 769px) {
+@media only screen and (min-width: 992px) {
     h1 {
         font-family: 'frente_h1regular';
         font-size: 140px;
