@@ -346,7 +346,7 @@ function berechneWetter() {
             $("#wetterInfo").append('<li class="li' + dunkelheit[0] + '">Tageslicht: ' + dunkelheit[1] + '</li>');
             
             var niederschlag = berechneNiederschlag(data.weather[0].id);
-            $("#wetterInfo").append('<li class="li' + niederschlag + '">Wetterlage: ' + data.weather[0].description + '</li>');
+            $("#wetterInfo").append('<li class="li' + niederschlag + '">Wetterlage: ' + grossschreibung(data.weather[0].description) + '</li>');
 
             // Finale Entscheidung als Text einblenden
             var entscheidung = berechneTacho(data);
@@ -457,6 +457,11 @@ function berechneTacho(data) {
     $('#tacho-img').css("transform", "rotate("+degree+"deg)");
     $('#tacho-img').css("animation-name", "spin"+moeglichkeit);
     return moeglichkeit;
+}
+
+// Mache immer den ersten Buchstaben eines Wortes gross
+function grossschreibung(str) {
+    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 }
 
 //********************************************
