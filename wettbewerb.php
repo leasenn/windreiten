@@ -12,56 +12,66 @@ $errorfields = array();
 if(($_POST["vorname"])) {
     $vorname = $_POST["vorname"];
 } else {
-    $errorfields[] = "vorname";
+    $errorfields[] = "Vorname fehlt";
     $valid = false;
 }
 
 if(($_POST["name"])) {
     $name = $_POST["name"];
 } else {
-    $errorfields[] = "name";
+    $errorfields[] = "Name fehlt";
     $valid = false;
 }
 
 if(($_POST["adresse"])) {
     $adresse = $_POST["adresse"];
 } else {
-    $errorfields[] = "adresse";
+    $errorfields[] = "Adresse fehlt";
     $valid = false;
 }
 
 if(($_POST["plz"])) {
-    $plz = $_POST["plz"];
+    if(is_numeric($_POST["plz"])) {
+        $plz = $_POST["plz"];
+    } else {
+        $errorfields[] = "PLZ muss aus Zahlen bestehen";
+        $valid = false;
+    }
 } else {
-    $errorfields[] = "plz";
+    $errorfields[] = "PLZ fehlt";
     $valid = false;
 }
 
 if(($_POST["ort"])) {
     $ort = $_POST["ort"];
 } else {
-    $errorfields[] = "ort";
+    $errorfields[] = "Ort fehlt";
     $valid = false;
 }
 
 if(($_POST["land"])) {
     $land = $_POST["land"];
 } else {
-    $errorfields[] = "land";
+    $errorfields[] = "Land fehlt";
     $valid = false;
 }
 
 if(($_POST["email"])) {
-    $email = $_POST["email"];
+    if (filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
+      $email = $_POST["email"];
+    } else {       
+        $errorfields[] = "E-Mail ungültig";
+        $valid = false;
+    }
 } else {
-    $errorfields[] = "email";
+    $errorfields[] = "E-Mail fehlt";
     $valid = false;
 }
 
 if($_POST["recaptcha"]) {
     $recaptcha = $_POST["recaptcha"];
 } else {
-    $errorfields[] = "recaptcha";
+    $errorfields[] = "'Ich bin kein Roboter' anwählen";
     $valid = false;
 }
 
@@ -83,7 +93,6 @@ if ($recaptcha) {
     );
 }
 if ($response != null && $response->success) { // When Recaptcha erfolgreich verlaufen ist
-
     // Create connection
     $conn = mysqli_connect($servername, $username, $password, $dbname);
 

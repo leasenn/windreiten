@@ -215,21 +215,14 @@ p.headline {
 .divWettbewerb .row {
     margin-top: 10px;
 }
-/*label.col-lg-3 {
-    padding-left:0px;
-    font-family: 'abeezeeregular', serif;
-    font-size: 16px;   
-    font-weight: 100;
-}
 
-.form-control {
-    width: 100px;
+#g-recaptcha-response {
+    padding-left:15px;
+    padding-bottom: 15px;
 }
-
-div.col-lg-9 {
-    margin-bottom: 5px;
-    padding-left: 0px;
-}*/
+#wettbewerbResponse {
+    margin-top: 15px;
+}
 
 /* ==========================================================================
    Fonts

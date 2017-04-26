@@ -91,6 +91,21 @@ $(document).ready(function(){
             dataType: "json",
             success: function(data) {
                 console.log(data);
+                if(data.success) { 
+                    if($("#wettbewerbResponse").hasClass("alert-danger")) {  // Falls Eingabe korrigiert wurde und nun korrekt ist
+                        $("#wettbewerbResponse").removeClass("alert alert-danger"); 
+                    }
+                    $("#wettbewerbResponse").addClass("alert alert-success"); 
+                    $("input").each(function() {
+                        $(this).val("");
+                    });
+                    grecaptcha.reset();
+                }
+                else { 
+                    $("#wettbewerbResponse").addClass("alert alert-danger"); 
+                    grecaptcha.reset();
+                }
+                $("#wettbewerbResponse").text(data.message);
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log(errorThrown);
@@ -149,18 +164,6 @@ $(".teamimage").click(function() {
     console.log(name);
     $(name).modal('show');
 });
-
-// Modale Dialoge zentrieren horizontal
-/*$('.modal').each(function(){
-    $(this).modal('show').css({
-        'margin-top': function () { //vertical centering
-            return -($(this).height() / 2);
-        },
-        'margin-left': function () { //Horizontal centering
-            return -($(this).width() / 2);
-        }
-    });
-});*/
 
 //********************************************
 // YouTube Videos einbinden
