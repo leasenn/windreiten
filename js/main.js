@@ -7,7 +7,6 @@ $(document).ready(function(){
     
     // Prüfe, ob Touchdevice oder Desktop
    function isTouchDevice() {
-        console.log('ontouchstart' in window);
         return 'ontouchstart' in window        
       || navigator.maxTouchPoints;
 
@@ -39,7 +38,7 @@ $(document).ready(function(){
             triggerHook: 0.8
         })
         .setClassToggle('.introtext', 'fade-in') // Klasse 'fade-in' zu Team hinzufügen
-        .addIndicators()
+        //.addIndicators()
         .addTo(controller);
         
         // Team einfaden
@@ -49,13 +48,12 @@ $(document).ready(function(){
             triggerHook: 0.7
         })
         .setTween(tweenTeam)
-        .addIndicators()
+        //.addIndicators()
         .addTo(controller);
     } else { // Ist Touchdevice
 
         $(".modal").each(function() {
             var videoUrl = $(this).find("iframe").attr('src');
-            console.log(this);
             $(this).removeClass("modal fade");
             $(this).removeAttr("tabindex role aria-hidden aria-labelledby");
             var selector = "button[data-target='#"+$(this).attr("id")+"']";
@@ -90,7 +88,6 @@ $(document).ready(function(){
             type: "POST",
             dataType: "json",
             success: function(data) {
-                console.log(data);
                 if(data.success) { 
                     if($("#wettbewerbResponse").hasClass("alert-danger")) {  // Falls Eingabe korrigiert wurde und nun korrekt ist
                         $("#wettbewerbResponse").removeClass("alert alert-danger"); 
@@ -159,9 +156,7 @@ $(".teamimage").hover(function() {
 
 $(".teamimage").click(function() {
     $(this).nextAll('.modal').modal('show');
-    console.log($(this).attr("id"));
     var name = "#mdl"+$(this).attr("id").slice(3); // Herausfinden, welche Person geklickt wurde
-    console.log(name);
     $(name).modal('show');
 });
 
@@ -176,7 +171,6 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 // YouTube Player in Platzhalter Intro & 360 einfüllen
 var player;
-//var scrollbasedPaused360 = false;
 function onYouTubePlayerAPIReady() {
     player = new YT.Player('yt-vorstellung-intro', {
         height: '100%',
@@ -361,7 +355,7 @@ function berechneWetter() {
             else { $("#wetterdaten").append("Eine Ballonfahrt scheint zurzeit unmöglich."); }
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            console.log("error requesting cityweather");
+            console.log("Wetter konnte nicht geladen werden");
         }
     });
 }
