@@ -62,6 +62,35 @@ $(document).ready(function(){
         });
     }
     
+    // Brenner anpinnen
+    var pinBrennerScene = new ScrollMagic.Scene({
+        triggerElement: '#ballonscroll',
+        triggerHook: 0.2, 
+        duration: '70'
+    })
+    .setPin('#img2', {pushFollowers: false})
+    .addIndicators({name:"Brenner"})
+    .addTo(controller);
+    
+    // Ballonkorb anpinnen
+    var pinKorb1Scene = new ScrollMagic.Scene({
+        triggerElement: '#ballonscroll',
+        triggerHook: 0.2, 
+        duration: '70'
+    })
+    .setPin('#img3', {pushFollowers: false})
+    .addIndicators({name:"Korb1", indent:200})
+    .addTo(controller);
+    
+    var pinKorb2Scene = new ScrollMagic.Scene({
+        triggerElement: '#ballonscroll',
+        triggerHook: 0.1, 
+        duration: '30'
+    })
+    .setPin('#img3', {pushFollowers: false})
+    .addIndicators({name:"Korb2", indent:50})
+    .addTo(controller);
+    
     // Scrollfunktionen / Navigation
     controller.scrollTo(function (newScrollPos) {
         $("html, body").animate({scrollTop: newScrollPos});
