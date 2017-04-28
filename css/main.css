@@ -380,6 +380,7 @@ p.headline {
         padding-top: 50px;  
     }
     
+    
     .introtext {
         opacity: 0;
         transform: translateX(-30px);
@@ -400,6 +401,16 @@ p.headline {
         width:300px;
     }
 
+    #ballonscroll {
+        position: relative;
+    }
+    .imgBallon {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 60%;
+        margin: auto;
+    }
 }
 
 /* ==========================================================================
