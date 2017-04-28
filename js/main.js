@@ -50,6 +50,65 @@ $(document).ready(function(){
         .setTween(tweenTeam)
         //.addIndicators()
         .addTo(controller);
+        
+        // Hülletext einfaden
+        var pinHuelleTextScene = new ScrollMagic.Scene({
+            triggerElement: '#ballonscroll',
+            triggerHook: 0.35
+        })
+        .setClassToggle('#p1', 'fade-in')
+        //.addIndicators({name:"Hülletext", indent:400})
+        .addTo(controller);
+
+        // Brenner anpinnen
+        var pinBrennerScene = new ScrollMagic.Scene({
+            triggerElement: '#ballonscroll',
+            triggerHook: 0.2, 
+            duration: '70'
+        })
+        .setPin('#img2', {pushFollowers: false})
+        //.addIndicators({name:"Brenner"})
+        .addTo(controller);
+
+        // Brennertext einfaden
+        var pinBrennerTextScene = new ScrollMagic.Scene({
+            triggerElement: '#ballonscroll',
+            triggerHook: 0.2
+        })
+        .setClassToggle('#p2', 'fade-in')
+        //.addIndicators({name:"Brennertext", indent:400})
+        .addTo(controller);
+
+
+
+        // Korb anpinnen
+        var pinKorb1Scene = new ScrollMagic.Scene({
+            triggerElement: '#ballonscroll',
+            triggerHook: 0.2, 
+            duration: '70'
+        })
+        .setPin('#img3', {pushFollowers: false})
+        //.addIndicators({name:"Korb1", indent:200})
+        .addTo(controller);
+
+        var pinKorb2Scene = new ScrollMagic.Scene({
+            triggerElement: '#ballonscroll',
+            triggerHook: 0.1, 
+            duration: '35'
+        })
+        .setPin('#img3', {pushFollowers: false})
+        //.addIndicators({name:"Korb2", indent:50})
+        .addTo(controller);
+
+        // Korbtext einfaden
+        var pinKorbTextScene = new ScrollMagic.Scene({
+            triggerElement: '#ballonscroll',
+            triggerHook: 0.1
+        })
+        .setClassToggle('#p3', 'fade-in')
+        //.addIndicators({name:"Korbtext", indent:400})
+        .addTo(controller);
+        
     } else { // Ist Touchdevice
 
         $(".modal").each(function() {
@@ -62,34 +121,6 @@ $(document).ready(function(){
         });
     }
     
-    // Brenner anpinnen
-    var pinBrennerScene = new ScrollMagic.Scene({
-        triggerElement: '#ballonscroll',
-        triggerHook: 0.2, 
-        duration: '70'
-    })
-    .setPin('#img2', {pushFollowers: false})
-    .addIndicators({name:"Brenner"})
-    .addTo(controller);
-    
-    // Ballonkorb anpinnen
-    var pinKorb1Scene = new ScrollMagic.Scene({
-        triggerElement: '#ballonscroll',
-        triggerHook: 0.2, 
-        duration: '70'
-    })
-    .setPin('#img3', {pushFollowers: false})
-    .addIndicators({name:"Korb1", indent:200})
-    .addTo(controller);
-    
-    var pinKorb2Scene = new ScrollMagic.Scene({
-        triggerElement: '#ballonscroll',
-        triggerHook: 0.1, 
-        duration: '30'
-    })
-    .setPin('#img3', {pushFollowers: false})
-    .addIndicators({name:"Korb2", indent:50})
-    .addTo(controller);
     
     // Scrollfunktionen / Navigation
     controller.scrollTo(function (newScrollPos) {
