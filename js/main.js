@@ -263,18 +263,15 @@ function onYouTubePlayerAPIReady() {
 //********************************************
 var shouldStartAgain = true;
 var enterTriggered = false;
-var leaveTriggered = false;
-var hasEverPlayed = false;
+var leaveTriggered = true;
 
 var shouldStartAgain360 = true;
 var enterTriggered360 = false;
-var leaveTriggered360 = false;
-var hasEverPlayed360 = false;
+var leaveTriggered360 = true;
 
 var shouldStartAgainWetter = true;
 var enterTriggeredWetter = false;
-var leaveTriggeredWetter = false;
-var hasEverPlayedWetter = false;
+var leaveTriggeredWetter = true;
 
 $(window).scroll(function() {
     // Video Intro beim Vorbeiscrollen automatisch starten und stoppen
@@ -288,7 +285,6 @@ $(window).scroll(function() {
                 
                 if(shouldStartAgain == true) {
                     player.playVideo();
-                    hasEverPlayed = true;
                 }  
             }
         } else { // Wenn Video ausserhalb von sichtbaren Bereich: stoppen
@@ -298,7 +294,7 @@ $(window).scroll(function() {
                 leaveTriggered = true;
                 enterTriggered = false; // Jetzt musst du wieder neu triggern, weil Bild verlassen wurde! 
 
-                if((player.getPlayerState() == 1 || player.getPlayerState() == 3) || !hasEverPlayed) { // Läuft das Video gerade?
+                if((player.getPlayerState() == 1 || player.getPlayerState() == 3)) { // Läuft das Video gerade?
                     shouldStartAgain = true;
                 } else {
                     shouldStartAgain = false;
@@ -319,7 +315,6 @@ $(window).scroll(function() {
                 
                 if(shouldStartAgain360 == true) {
                     player360.playVideo();
-                    hasEverPlayed360 = true;
                 }
             }
             
@@ -329,7 +324,7 @@ $(window).scroll(function() {
                 leaveTriggered360 = true;
                 enterTriggered360 = false;
                 
-                if((player360.getPlayerState() == 1 || player360.getPlayerState() == 3) || !hasEverPlayed360) {
+                if((player360.getPlayerState() == 1 || player360.getPlayerState() == 3)) {
                     shouldStartAgain360 = true;
                 } else {
                     shouldStartAgain360 = false;
@@ -351,7 +346,6 @@ $(window).scroll(function() {
             
             if(shouldStartAgainWetter) {
                 $("#audioWetter").trigger('play');
-                hasEverPlayedWetter = true;
             }
         }
         
@@ -360,7 +354,7 @@ $(window).scroll(function() {
             leaveTriggeredWetter = true;
             enterTriggeredWetter = false;
             
-            if(!$("#audioWetter")[0].paused || !$("#audioWetter")[0].ended || 0 < $('#audioWetter')[0].currentTime || !hasEverPlayedWetter) { // Wenn Video läuft....
+            if(!$("#audioWetter")[0].paused && !$("#audioWetter")[0].ended && 0 < $('#audioWetter')[0].currentTime) { // Wenn Video läuft....
                 shouldStartAgainWetter = true;
             }  else {
                 shouldStartAgainWetter = false;
