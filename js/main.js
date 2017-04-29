@@ -174,31 +174,28 @@ $(document).ready(function(){
     //********************************************
     // Modals aktivieren und YouTube Video laden
     //********************************************
-    // Pilot
-    $("#iframePilot").attr('src', '');
-    $("#mdlPilot").on('hide.bs.modal', function() {
-        $("#iframePilot").attr('src', '');
-    });      
-    $("#mdlPilot").on('show.bs.modal', function() {
-        $("#iframePilot").attr('src', 'https://www.youtube.com/embed/e7oC06sLGfc?autoplay=1&rel=0');
-    });
     
-    // Passagier
-    $("#iframePassagier").attr('src', '');
-    $("#mdlPassagier").on('hide.bs.modal', function() {
-        $("#iframePassagier").attr('src', '');
-    });    
-    $("#mdlPassagier").on('show.bs.modal', function() {
-        $("#iframePassagier").attr('src', 'https://www.youtube.com/embed/pi7tNUuuzvA?autoplay=1&rel=0');
-    });
+    var modalData = [
+      { 
+          name: "Pilot",
+          src: "https://www.youtube.com/embed/e7oC06sLGfc?autoplay=1&rel=0"
+      }, { 
+          name: "Passagier",
+          src: "https://www.youtube.com/embed/pi7tNUuuzvA?autoplay=1&rel=0"
+      }, { 
+          name: "Verfolger",
+          src: "https://www.youtube.com/embed/2B2EQRy2ScU?autoplay=1&rel=0"
+      }
+    ];
     
-    // Verfolger
-    $("#iframeVerfolger").attr('src', '');
-    $("#mdlVerfolger").on('hide.bs.modal', function() {
-        $("#iframeVerfolger").attr('src', '');
-    });    
-    $("#mdlVerfolger").on('show.bs.modal', function() {
-        $("#iframeVerfolger").attr('src', 'https://www.youtube.com/embed/2B2EQRy2ScU?autoplay=1&rel=0');
+    $.each(modalData, function(index, value) {
+        $("#iframe"+value.name).attr('src', '');
+        $("#mdl"+value.name).on('hide.bs.modal', function() {
+            $("#iframe"+value.name).attr('src', '');
+        });      
+        $("#mdl"+value.name).on('show.bs.modal', function() {
+            $("#iframe"+value.name).attr('src', value.src);
+        });
     });
     
 });

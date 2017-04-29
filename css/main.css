@@ -393,6 +393,10 @@ p.headline {
         transform: translateX(0px);
     }
     
+    #intro-01 p {
+        margin-bottom: 30px;
+    }
+    
     .team {
         text-align: center;
         opacity: 0;
