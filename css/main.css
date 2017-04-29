@@ -295,7 +295,6 @@ p.headline {
     }
     
     .section103 { /* Ballon scrollen */ 
-        min-height:1000px;
         padding:20px;
     }
     .team {
@@ -316,6 +315,7 @@ p.headline {
     /* ScrollBallon */
     #ballonscroll {
         position: relative;
+        height: 450px;
     }
     .imgBallon {
         max-width: 300px;
@@ -328,14 +328,6 @@ p.headline {
     #ballontext {
         position: relative;
     }
-    .pBallon {
-        position: absolute;
-    }
-
-    
-    #p1 { top:480px; }
-    #p2 { top:590px; }
-    #p3 { top:700px; }
     
     /* Recaptcha verkleinern */
     #rc-imageselect, .g-recaptcha {
