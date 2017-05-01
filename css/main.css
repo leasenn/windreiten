@@ -224,6 +224,15 @@ p.headline {
     margin-top: 15px;
 }
 
+button.mdlButton {
+    background-image: url('../img/Button.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    width:auto;
+    height:auto;
+    display: inline-block;
+    border-width: 0;
+}
 /* ==========================================================================
    Fonts
    ========================================================================== */
