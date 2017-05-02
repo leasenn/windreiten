@@ -99,20 +99,6 @@ video#introVideo {
     );
 }
 
-p.headline {
-    font-size: 24px;
-    margin-top: 10px; /* damit näher an Titel */
-    padding-left: 50px;
-}
-
-#pfeil {
-    position: absolute;
-    top:80%;
-    left:50%;
-    
-    animation: jump 2s infinite;
-    animation-delay: 3s;
-}
 
 @keyframes jump {
   0%, 20%, 50%, 80%, 100% {
@@ -277,8 +263,24 @@ button.mdlButton, button#wettbewerbabschicken {
     #intro .content {
         position: absolute;
         top: 25%;
-        left: 60%;
+        left: 50%;
         transform: translate(-50%, -50%);
+    }
+    
+    p.headline {
+        font-size: 24px;
+        margin-top: 10px; /* damit näher an Titel */
+        //padding-left: 50px;
+    }
+    
+    #pfeil {
+        position: absolute;
+        top:80%;
+        left:50%;
+        transform: translate(-50%, -50%);
+
+        animation: jump 2s infinite;
+        animation-delay: 3s;
     }
     
     #logotop img {
@@ -293,8 +295,7 @@ button.mdlButton, button#wettbewerbabschicken {
         padding: 20px;
     }
     .section101 { /* Fullscreen Videos */
-        height:100vh;
-        /*background-color: #353535;*/
+        //min-height:100vh;
     }
 
     .section102 { /* Fullscreen Text & Fotos > inverted */
@@ -361,6 +362,22 @@ button.mdlButton, button#wettbewerbabschicken {
         top: 25%;
         left: 60%;
         transform: translate(-50%, -50%);
+    }
+    
+    p.headline {
+        font-size: 24px;
+        margin-top: 10px; /* damit näher an Titel */
+        padding-left: 50px;
+    }
+    
+    #pfeil {
+        position: absolute;
+        top:80%;
+        left:50%;
+        transform: translate(-50%, -50%);
+
+        animation: jump 2s infinite;
+        animation-delay: 3s;
     }
     
     #logotop {

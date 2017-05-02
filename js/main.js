@@ -111,6 +111,11 @@ $(document).ready(function(){
         
     } else { // Ist Touchdevice
 
+        // Warnung
+        $("#intro-01").prepend('<div class="alert alert-warning" role="alert">Diese Seite ist optimiert für Desktops. F&uuml;r das beste Nutzererlebnis besuche diese Seite von einem Computer aus.</div>');
+        
+        $("#fahrt-05").prepend('<div class="alert alert-warning" role="alert">Um dich w&auml;hrend der Ballonfahrt im 360°-Video zu bewegen, <a href="https://www.youtube.com/watch?v=v6rcuyeIsRY" target="_blank">&ouml;ffne das Video in der YouTube App</a> oder wechsle an einen Computer.</div>');
+        
         $(".modal").each(function() {
             var videoUrl = $(this).find("iframe").attr('src');
             $(this).removeClass("modal fade");
