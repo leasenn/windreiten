@@ -210,12 +210,22 @@ button.mdlButton, button#wettbewerbabschicken {
     background-image: url('../img/Button.png');
     background-repeat: no-repeat;
     background-position: center center;
+    background-color: #fff;
     width:auto;
     height:auto;
     display: inline-block;
     border-width: 0;
     color:#fff;
+    padding: 12px 24px;
+    font-size: 16px;
+    
 }
+
+.mdlButton:focus {
+    outline: #363636 solid 1px;
+}
+
+
 /* ==========================================================================
    Fonts
    ========================================================================== */
