@@ -512,7 +512,9 @@ function berechneTacho(data) {
 
 // Mache immer den ersten Buchstaben eines Wortes gross
 function grossschreibung(str) {
-    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+    str = str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}); // Alle ersten Buchstaben gross
+    str = str.replace("Paar", "paar"); // Ausnahme beim Wort "paar"
+    return str;
 }
 
 //********************************************
