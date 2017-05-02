@@ -57,7 +57,7 @@ $(document).ready(function(){
             triggerHook: 0.2
         })
         .setClassToggle('#p1', 'fade-in')
-        .addIndicators({name:"Hülletext", indent:400})
+        //.addIndicators({name:"Hülletext", indent:400})
         .addTo(controller);
 
         // Brenner anpinnen
@@ -178,13 +178,13 @@ $(document).ready(function(){
     var modalData = [
       { 
           name: "Pilot",
-          src: "https://www.youtube.com/embed/e7oC06sLGfc?autoplay=1&rel=0"
+          src: "https://www.youtube.com/embed/1TJeLbJXbLI?autoplay=1&rel=0"
       }, { 
           name: "Passagier",
-          src: "https://www.youtube.com/embed/pi7tNUuuzvA?autoplay=1&rel=0"
+          src: "https://www.youtube.com/embed/EBTajFzmfCU?autoplay=1&rel=0"
       }, { 
           name: "Verfolger",
-          src: "https://www.youtube.com/embed/2B2EQRy2ScU?autoplay=1&rel=0"
+          src: "https://www.youtube.com/embed/1FQ_bCpFl0o?autoplay=1&rel=0"
       }
     ];
     
@@ -403,7 +403,7 @@ function berechneWetter() {
             var entscheidung = berechneTacho(data);
             if(entscheidung == 0) { $("#wetterdaten").append("Eine Ballonfahrt scheint zurzeit möglich."); }
             else if(entscheidung == 1) { $("#wetterdaten").append("Eine Ballonfahrt scheint zurzeit nur bedingt möglich."); }
-            else { $("#wetterdaten").append("Eine Ballonfahrt scheint zurzeit unmöglich."); }
+            else { $("#wetterdaten").append("Eine Ballonfahrt scheint zurzeit nicht möglich."); }
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log("Wetter konnte nicht geladen werden");

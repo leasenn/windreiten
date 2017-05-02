@@ -224,7 +224,7 @@ p.headline {
     margin-top: 15px;
 }
 
-button.mdlButton {
+button.mdlButton, button#wettbewerbabschicken {
     background-image: url('../img/Button.png');
     background-repeat: no-repeat;
     background-position: center center;
@@ -232,6 +232,7 @@ button.mdlButton {
     height:auto;
     display: inline-block;
     border-width: 0;
+    color:#fff;
 }
 /* ==========================================================================
    Fonts
