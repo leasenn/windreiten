@@ -422,6 +422,49 @@ function berechneWetter() {
             console.log("Wetter konnte nicht geladen werden");
         }
     });
+    
+    // Load autosuggest
+    $.ajax({
+		url: 'data/city.list.json',
+		dataType: "json",
+		success: function(data) {
+			$("#inputStadt").autocomplete({
+				source: data.map(function(e) {
+					return e.name + ", " + e.country;
+				})
+			});
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			console.log("error requesting citynames from local json");
+		}
+	});
+    
+    $("#btnStadt").click(function(event) {
+		event.preventDefault();
+		$.ajax({
+			url: 'http://api.openweathermap.org/data/2.5/weather',
+			dataType: "json",
+			type: "GET",
+			data: {
+				units: "metric",
+				q: $("#inputStadt").val(),
+				APPID: "a9fb7b1bd2ebc0438c97fae9a24ff62c"
+			},
+			success: function(data) {
+				console.log("data recieved: "+data);/*
+                var tr = document.createElement("tr");
+				$(tr).attr("id",data.id);
+				$(tr).append('<td class="city-name">' + data.name + ', ' + data.sys.country + '</td>');
+				$(tr).append('<td class="temperature">' + (Math.round(data.main.temp*10)/10) + ' °C</td>');
+				$(tr).append('<td><img src="img/' + data.weather[0].icon + '.png" /></td>');
+				$(tr).append('<td><button>Hinzufügen</button></td>');
+				$("#search-result table").append($(tr));*/
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				console.log("error requesting cityweather");
+			}
+		});
+	});
 }
 
 // Berechne Windausgabe
