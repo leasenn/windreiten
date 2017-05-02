@@ -117,10 +117,6 @@ video#introVideo {
 #team {
     width:100%;
 }
-.team img {
-    margin-bottom: 30px;
-    margin-top: 30px;
-}
 
 .modal-content {
     width:1150px;        
@@ -316,6 +312,7 @@ button.mdlButton, button#wettbewerbabschicken {
     
     .teamimage {
         width:200px;
+        margin-bottom: 0;
     }
     
     .iframeTeam {
@@ -431,6 +428,7 @@ button.mdlButton, button#wettbewerbabschicken {
     }
     .teamimage {
         width:300px;
+        margin-bottom: 30px;
     }
 
     #ballonscroll {

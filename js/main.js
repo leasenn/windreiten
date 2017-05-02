@@ -4,13 +4,6 @@
 // www.leasenn.ch
 //********************************************
 $(document).ready(function(){
-    
-    // Prüfe, ob Touchdevice oder Desktop
-   function isTouchDevice() {
-        return 'ontouchstart' in window        
-      || navigator.maxTouchPoints;
-
-    }
 
     //********************************************
     // ScrollMagic
@@ -111,10 +104,15 @@ $(document).ready(function(){
         
     } else { // Ist Touchdevice
 
+        // Sichtbare Formatierung forcieren
+        $(".introtext").css("opacity",1);
+        $(".team").css("opacity",1);
+        //$("#vorstellung-02").css("width","auto");
+        
         // Warnung
         $("#intro-01").prepend('<div class="alert alert-warning" role="alert">Diese Seite ist optimiert für Desktops. F&uuml;r das beste Nutzererlebnis besuche diese Seite von einem Computer aus.</div>');
         
-        $("#fahrt-05").prepend('<div class="alert alert-warning" role="alert">Um dich w&auml;hrend der Ballonfahrt im 360°-Video zu bewegen, <a href="https://www.youtube.com/watch?v=v6rcuyeIsRY" target="_blank">&ouml;ffne das Video in der YouTube App</a> oder wechsle an einen Computer.</div>');
+        $("#ballontext").append('<div class="alert alert-warning" role="alert">Um dich w&auml;hrend der Ballonfahrt im 360°-Video zu bewegen, <a href="https://www.youtube.com/watch?v=v6rcuyeIsRY" target="_blank">&ouml;ffne das Video in der YouTube App</a> oder wechsle an einen Computer.</div>');
         
         $(".modal").each(function() {
             var videoUrl = $(this).find("iframe").attr('src');
@@ -205,6 +203,13 @@ $(document).ready(function(){
     
 });
 
+// Prüfe, ob Touchdevice oder Desktop
+function isTouchDevice() {
+    return 'ontouchstart' in window        
+  || navigator.maxTouchPoints;
+
+}
+
 //********************************************
 // Team Abschnitt interaktiv
 //********************************************
@@ -275,68 +280,71 @@ var shouldStartAgainWetter = true;
 var enterTriggeredWetter = false;
 var leaveTriggeredWetter = true;
 
+var usingTouch = isTouchDevice();
 $(window).scroll(function() {
-    // Video Intro beim Vorbeiscrollen automatisch starten und stoppen
-    $("iframe#yt-vorstellung-intro").each( function() {
-        if( ($(window).scrollTop() > $(this).offset().top - 400) && ($(window).scrollTop() < $(this).offset().top + 300)) {
-            // on Enter
-            if(!enterTriggered) {
-                // Check if First time
-                enterTriggered = true;
-                leaveTriggered = false;
-                
-                if(shouldStartAgain == true) {
-                    player.playVideo();
-                }  
-            }
-        } else { // Wenn Video ausserhalb von sichtbaren Bereich: stoppen
-            // on leave
-            if(!leaveTriggered) {
-                // Check if first time
-                leaveTriggered = true;
-                enterTriggered = false; // Jetzt musst du wieder neu triggern, weil Bild verlassen wurde! 
+    if(!usingTouch) { // Automatisches Abspielen deaktivieren für Touchdevices
+        // Video Intro beim Vorbeiscrollen automatisch starten und stoppen
+        $("iframe#yt-vorstellung-intro").each( function() {
+            if( ($(window).scrollTop() > $(this).offset().top - 400) && ($(window).scrollTop() < $(this).offset().top + 300)) {
+                // on Enter
+                if(!enterTriggered) {
+                    // Check if First time
+                    enterTriggered = true;
+                    leaveTriggered = false;
 
-                if((player.getPlayerState() == 1 || player.getPlayerState() == 3)) { // Läuft das Video gerade?
-                    shouldStartAgain = true;
-                } else {
-                    shouldStartAgain = false;
+                    if(shouldStartAgain == true) {
+                        player.playVideo();
+                    }  
                 }
-                player.pauseVideo();  
-            }
+            } else { // Wenn Video ausserhalb von sichtbaren Bereich: stoppen
+                // on leave
+                if(!leaveTriggered) {
+                    // Check if first time
+                    leaveTriggered = true;
+                    enterTriggered = false; // Jetzt musst du wieder neu triggern, weil Bild verlassen wurde! 
 
-        }
-    }); 
-    
-    // Video 360 beim Vorbeiscrollen automatisch starten und stoppen
-    $("iframe#yt-vorstellung-360").each( function() {
-        if( ($(window).scrollTop() > $(this).offset().top - 200) && ($(window).scrollTop() < $(this).offset().top + 300)) { // Solange Video in sichtbaren Bereich: abspielen
-            // on Enter
-            if(!enterTriggered360) {
-                enterTriggered360 = true;
-                leaveTriggered360 = false;
-                
-                if(shouldStartAgain360 == true) {
-                    player360.playVideo();
+                    if((player.getPlayerState() == 1 || player.getPlayerState() == 3)) { // Läuft das Video gerade?
+                        shouldStartAgain = true;
+                    } else {
+                        shouldStartAgain = false;
+                    }
+                    player.pauseVideo();  
                 }
+
             }
-            
-        } else { // Wenn Video ausserhalb von sichtbaren Bereich: stoppen
-            // on Leave
-            if(!leaveTriggered360) {
-                leaveTriggered360 = true;
-                enterTriggered360 = false;
-                
-                if((player360.getPlayerState() == 1 || player360.getPlayerState() == 3)) {
-                    shouldStartAgain360 = true;
-                } else {
-                    shouldStartAgain360 = false;
+        }); 
+
+        // Video 360 beim Vorbeiscrollen automatisch starten und stoppen
+        $("iframe#yt-vorstellung-360").each( function() {
+            if( ($(window).scrollTop() > $(this).offset().top - 200) && ($(window).scrollTop() < $(this).offset().top + 300)) { // Solange Video in sichtbaren Bereich: abspielen
+                // on Enter
+                if(!enterTriggered360) {
+                    enterTriggered360 = true;
+                    leaveTriggered360 = false;
+
+                    if(shouldStartAgain360 == true) {
+                        player360.playVideo();
+                    }
                 }
-                player360.pauseVideo();
+
+            } else { // Wenn Video ausserhalb von sichtbaren Bereich: stoppen
+                // on Leave
+                if(!leaveTriggered360) {
+                    leaveTriggered360 = true;
+                    enterTriggered360 = false;
+
+                    if((player360.getPlayerState() == 1 || player360.getPlayerState() == 3)) {
+                        shouldStartAgain360 = true;
+                    } else {
+                        shouldStartAgain360 = false;
+                    }
+                    player360.pauseVideo();
+                }
+
             }
-            
-        }
-    }); 
+        }); 
     
+    }
     // Prüfen, ob Tacho im sichtbaren Bereich ist
     if( ($(window).scrollTop() > $("#wetter").offset().top - 600 && $(window).scrollTop() < $("#wetter").offset().top + 300)) {
         if($('#tacho-img').css("animation-name") == "spin") { // solange noch Standardwert
@@ -518,7 +526,10 @@ function berechneTacho(data) {
 // Mache immer den ersten Buchstaben eines Wortes gross
 function grossschreibung(str) {
     str = str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}); // Alle ersten Buchstaben gross
-    str = str.replace("Paar", "paar"); // Ausnahme beim Wort "paar"
+    // Ausnahmen
+    str = str.replace("Paar", "paar");
+    str = str.replace("üBerwiegend", "Überwiegend");
+    str = str.replace("Bewölkt", "bewölkt");
     return str;
 }
 
