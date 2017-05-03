@@ -201,6 +201,39 @@ $(document).ready(function(){
         });
     });
     
+    
+    // Autocomplete Wetter laden
+    /*$.ajax({
+        url: 'data/city.list.json',
+        dataType: "json",
+        success: function(data) {
+            console.log("Success: ")
+            $("#inputStadt").autocomplete({
+                max:10,
+                source: data.map(function(e) {
+                    return e.name + ", " + e.country;
+                })
+                source: '{"test1","london","lavin","las vegas"}'
+            });
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log("error requesting citynames from local json");
+        }
+    });*/
+    $.getJSON("data/city.list.json", function(data) {
+        console.log("success loading json");
+        $("#inputStadt").autocomplete({
+            max:10,
+            source: data.map(function(e) {
+                return e.name + ", " + e.country;
+            })
+            //source: '{"test1","london","lavin","las vegas"}'
+        });
+    }).fail(function() {
+        console.log("Loading json failed");
+    });
+    
+    
 });
 
 // Prüfe, ob Touchdevice oder Desktop
@@ -391,53 +424,13 @@ function berechneWetter() {
             APPID: "cb1bd4d3e7ff8998307ff5883a6c8382"
         },
         success: function(data) { // Wenn erfolgreich Daten zurück kommen...
-            // Liste erstellen
-            var date = new Date(data.dt*1000);
-            
-            // Wettermeta in Statusabsatz
-            $("#wetterStatus").html('Das Wetter für Zürich vom ' + date.getDate() + "." + (date.getMonth()+1) +"." + date.getFullYear() + " um " + date.getHours() + ":" + date.getMinutes() + ' Uhr');
-            
-            // Wetterinfo ausfüllen
-            $("#wetterInfo").append('<li class="li0">Temperatur: ' + data.main.temp + ' °C</li>');
-            
-            bewoelkung = berechneBewoelkung(data.clouds.all);
-            $("#wetterInfo").append('<li class="li' + bewoelkung + '">Bewölkung: ' + data.clouds.all + ' %</li>');
-            
-            
-            $("#wetterInfo").append(berechneWind(data.wind));
-            
-            var dunkelheit = berechneDunkelheit(data.sys.sunrise, data.sys.sunset);
-            $("#wetterInfo").append('<li class="li' + dunkelheit[0] + '">Tageslicht: ' + dunkelheit[1] + '</li>');
-            
-            var niederschlag = berechneNiederschlag(data.weather[0].id);
-            $("#wetterInfo").append('<li class="li' + niederschlag + '">Wetterlage: ' + grossschreibung(data.weather[0].description) + '</li>');
-
-            // Finale Entscheidung als Text einblenden
-            var entscheidung = berechneTacho(data);
-            if(entscheidung == 0) { $("#wetterdaten").append("Eine Ballonfahrt scheint zurzeit möglich."); }
-            else if(entscheidung == 1) { $("#wetterdaten").append("Eine Ballonfahrt scheint zurzeit nur bedingt möglich."); }
-            else { $("#wetterdaten").append("Eine Ballonfahrt scheint zurzeit nicht möglich."); }
+            $('#tacho-img').css("animation-name", "spin"); // Tacho zurücksetzen
+            tachoAusfuellen(data);
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log("Wetter konnte nicht geladen werden");
         }
     });
-    
-    // Load autosuggest
-    $.ajax({
-		url: 'data/city.list.json',
-		dataType: "json",
-		success: function(data) {
-			$("#inputStadt").autocomplete({
-				source: data.map(function(e) {
-					return e.name + ", " + e.country;
-				})
-			});
-		},
-		error: function(jqXHR, textStatus, errorThrown) {
-			console.log("error requesting citynames from local json");
-		}
-	});
     
     $("#btnStadt").click(function(event) {
 		event.preventDefault();
@@ -448,10 +441,12 @@ function berechneWetter() {
 			data: {
 				units: "metric",
 				q: $("#inputStadt").val(),
+                lang: 'de',
 				APPID: "a9fb7b1bd2ebc0438c97fae9a24ff62c"
 			},
 			success: function(data) {
-				console.log("data recieved: "+data);/*
+				tachoAusfuellen(data);
+                /*
                 var tr = document.createElement("tr");
 				$(tr).attr("id",data.id);
 				$(tr).append('<td class="city-name">' + data.name + ', ' + data.sys.country + '</td>');
@@ -465,6 +460,39 @@ function berechneWetter() {
 			}
 		});
 	});
+}
+
+
+// Tacho ausfüllen
+function tachoAusfuellen(data) {
+    // Liste erstellen
+    var date = new Date(data.dt*1000);
+
+    // Wettermeta in Statusabsatz
+    $("#wetterStatus").html('Das Wetter für '+data.name+' vom ' + date.getDate() + "." + (date.getMonth()+1) +"." + date.getFullYear() + " um " + date.getHours() + ":" + date.getMinutes() + ' Uhr');
+
+    $("#wetterInfo").html(""); // Leeren
+    // Wetterinfo ausfüllen
+    $("#wetterInfo").append('<li class="li0">Temperatur: ' + data.main.temp + ' °C</li>');
+
+    bewoelkung = berechneBewoelkung(data.clouds.all);
+    $("#wetterInfo").append('<li class="li' + bewoelkung + '">Bewölkung: ' + data.clouds.all + ' %</li>');
+
+
+    $("#wetterInfo").append(berechneWind(data.wind));
+
+    var dunkelheit = berechneDunkelheit(data.sys.sunrise, data.sys.sunset);
+    $("#wetterInfo").append('<li class="li' + dunkelheit[0] + '">Tageslicht: ' + dunkelheit[1] + '</li>');
+
+    var niederschlag = berechneNiederschlag(data.weather[0].id);
+    $("#wetterInfo").append('<li class="li' + niederschlag + '">Wetterlage: ' + grossschreibung(data.weather[0].description) + '</li>');
+
+    // Finale Entscheidung als Text einblenden
+    var entscheidung = berechneTacho(data);
+    $("#wetterEntscheidung").html(""); // Leeren
+    if(entscheidung == 0) { $("#wetterEntscheidung").append("Eine Ballonfahrt in " + data.name + " scheint zurzeit möglich."); }
+    else if(entscheidung == 1) { $("#wetterEntscheidung").append("Eine Ballonfahrt in " + data.name + " scheint zurzeit nur bedingt möglich."); }
+    else { $("#wetterEntscheidung").append("Eine Ballonfahrt in " + data.name + " scheint zurzeit nicht möglich."); }
 }
 
 // Berechne Windausgabe
@@ -497,7 +525,7 @@ function berechneDunkelheit(sunrise, sunset) {
         return [1, "Knapp noch genug hell"];
     }
     else if(timestampNow >= sunset*1000+1800*1000) {
-        return [2, "Wieder zu dunkel"];
+        return [2, "Schon zu dunkel"];
     }
     else {
         console.log("Fehler beim Berechnen der Dunkelheit");

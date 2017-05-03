@@ -13,6 +13,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/jquery-ui.min.css" rel="stylesheet">
         <link href="css/main.css" rel="stylesheet">
         
         <link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon.png">
@@ -120,9 +121,12 @@
                         </p>
                         <ul id="wetterInfo">
                         </ul>
+                        <p id="wetterEntscheidung">
+                        </p>
+                        <hr>
                         <p>
-                            Pr&uuml;fe das Ballonwetter f&uuml;r eine andere Stadt: <input id="inputStadt" type="text" placeholder="Stadt | PLZ [, ISO Ländercode]">
-                            <button id="btnStadt">Stadt suchen</button>
+                            Pr&uuml;fe das Ballonwetter f&uuml;r eine andere Stadt: <br>
+                            <input id="inputStadt" type="text" placeholder="Bern"> <button id="btnStadt">Stadt suchen</button>
                         </p>
                     </div>
                     <div id="tacho-komp" class="col-sm-12 col-md-6">
@@ -272,10 +276,10 @@
         <!-- ScrollMagic GreenSock Plugin -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/animation.gsap.js"></script>
 
+		<script src="js/jquery-ui.min.js"></script>
         <script src="js/main.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src='https://www.google.com/recaptcha/api.js?hl=de-CH'></script>
-		<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
         
 
     </body>
