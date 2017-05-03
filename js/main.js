@@ -203,30 +203,21 @@ $(document).ready(function(){
     
     
     // Autocomplete Wetter laden
-    /*$.ajax({
-        url: 'data/city.list.json',
-        dataType: "json",
-        success: function(data) {
-            console.log("Success: ")
-            $("#inputStadt").autocomplete({
-                max:10,
-                source: data.map(function(e) {
-                    return e.name + ", " + e.country;
-                })
-                source: '{"test1","london","lavin","las vegas"}'
-            });
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.log("error requesting citynames from local json");
-        }
-    });*/
     $.getJSON("data/city.list.json", function(data) {
         console.log("success loading json");
         $("#inputStadt").autocomplete({
-            max:10,
-            source: data.map(function(e) {
-                return e.name + ", " + e.country;
-            })
+            minLength:3,
+            source: function(request, response) {
+                var results = data.map(function(e) {
+                    return e.name + ", " + e.country;
+                })
+                results = $.ui.autocomplete.filter(results, request.term);
+                response(results.slice(0,5));
+            },
+            select: function() {
+                console.log("selected");
+                berechneStadt();
+            }
             //source: '{"test1","london","lavin","las vegas"}'
         });
     }).fail(function() {
@@ -431,37 +422,42 @@ function berechneWetter() {
             console.log("Wetter konnte nicht geladen werden");
         }
     });
-    
-    $("#btnStadt").click(function(event) {
-		event.preventDefault();
-		$.ajax({
-			url: 'http://api.openweathermap.org/data/2.5/weather',
-			dataType: "json",
-			type: "GET",
-			data: {
-				units: "metric",
-				q: $("#inputStadt").val(),
-                lang: 'de',
-				APPID: "a9fb7b1bd2ebc0438c97fae9a24ff62c"
-			},
-			success: function(data) {
-				tachoAusfuellen(data);
-                /*
-                var tr = document.createElement("tr");
-				$(tr).attr("id",data.id);
-				$(tr).append('<td class="city-name">' + data.name + ', ' + data.sys.country + '</td>');
-				$(tr).append('<td class="temperature">' + (Math.round(data.main.temp*10)/10) + ' °C</td>');
-				$(tr).append('<td><img src="img/' + data.weather[0].icon + '.png" /></td>');
-				$(tr).append('<td><button>Hinzufügen</button></td>');
-				$("#search-result table").append($(tr));*/
-			},
-			error: function(jqXHR, textStatus, errorThrown) {
-				console.log("error requesting cityweather");
-			}
-		});
-	});
 }
 
+$("#btnStadt").click(function(event) {
+    event.preventDefault();
+    berechneStadt();
+});
+
+// Berechne Stadt (nach Click auf Button oder Click auf Auswahl bei Autocomplete)
+function berechneStadt() {
+    $.ajax({
+        url: 'http://api.openweathermap.org/data/2.5/weather',
+        dataType: "json",
+        type: "GET",
+        data: {
+            units: "metric",
+            q: $("#inputStadt").val(),
+            lang: 'de',
+            APPID: "a9fb7b1bd2ebc0438c97fae9a24ff62c"
+        },
+        success: function(data) {
+            tachoAusfuellen(data);
+            /*
+            var tr = document.createElement("tr");
+            $(tr).attr("id",data.id);
+            $(tr).append('<td class="city-name">' + data.name + ', ' + data.sys.country + '</td>');
+            $(tr).append('<td class="temperature">' + (Math.round(data.main.temp*10)/10) + ' °C</td>');
+            $(tr).append('<td><img src="img/' + data.weather[0].icon + '.png" /></td>');
+            $(tr).append('<td><button>Hinzufügen</button></td>');
+            $("#search-result table").append($(tr));*/
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log("error requesting cityweather");
+        }
+    });
+    $("#inputStadt").val(""); // Inputfeld zurücksetzen
+}
 
 // Tacho ausfüllen
 function tachoAusfuellen(data) {
@@ -469,7 +465,7 @@ function tachoAusfuellen(data) {
     var date = new Date(data.dt*1000);
 
     // Wettermeta in Statusabsatz
-    $("#wetterStatus").html('Das Wetter für '+data.name+' vom ' + date.getDate() + "." + (date.getMonth()+1) +"." + date.getFullYear() + " um " + date.getHours() + ":" + date.getMinutes() + ' Uhr');
+    $("#wetterStatus").html('Das Wetter für '+data.name+' ('+data.sys.country+') vom ' + date.getDate() + "." + (date.getMonth()+1) +"." + date.getFullYear() + " um " + date.getHours() + ":" + date.getMinutes() + ' Uhr');
 
     $("#wetterInfo").html(""); // Leeren
     // Wetterinfo ausfüllen
@@ -490,16 +486,16 @@ function tachoAusfuellen(data) {
     // Finale Entscheidung als Text einblenden
     var entscheidung = berechneTacho(data);
     $("#wetterEntscheidung").html(""); // Leeren
-    if(entscheidung == 0) { $("#wetterEntscheidung").append("Eine Ballonfahrt in " + data.name + " scheint zurzeit möglich."); }
-    else if(entscheidung == 1) { $("#wetterEntscheidung").append("Eine Ballonfahrt in " + data.name + " scheint zurzeit nur bedingt möglich."); }
-    else { $("#wetterEntscheidung").append("Eine Ballonfahrt in " + data.name + " scheint zurzeit nicht möglich."); }
+    if(entscheidung == 0) { $("#wetterEntscheidung").append("Eine Ballonfahrt in " + data.name + " ("+data.sys.country+") scheint zurzeit möglich."); }
+    else if(entscheidung == 1) { $("#wetterEntscheidung").append("Eine Ballonfahrt in " + data.name + " ("+data.sys.country+") scheint zurzeit nur bedingt möglich."); }
+    else { $("#wetterEntscheidung").append("Eine Ballonfahrt in " + data.name + " ("+data.sys.country+") scheint zurzeit nicht möglich."); }
 }
 
 // Berechne Windausgabe
 function berechneWind(wind) {
     var output = "";
     if(wind.deg !== undefined) {
-        output += '<li class="li0">Windrichtung: ' + wind.deg + '° (' + berechneRichtung(wind.deg) + ')</li>';
+        output += '<li class="li0">Windrichtung: ' + Math.round((wind.deg)*100)/100 + '° (' + berechneRichtung(wind.deg) + ')</li>';
     }
     if(wind.speed !== undefined) {
         windstaerke = berechneWindstaerke(wind.speed);

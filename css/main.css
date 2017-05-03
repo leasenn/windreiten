@@ -221,6 +221,19 @@ button.mdlButton, button#wettbewerbabschicken {
     
 }
 
+#btnStadt {
+    background-image: url('../img/Button.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-color: #fff;
+    width:auto;
+    height:auto;
+    display: inline-block;
+    border-width: 0;
+    color:#fff;
+
+}
+
 .mdlButton:focus {
     outline: #363636 solid 1px;
 }
