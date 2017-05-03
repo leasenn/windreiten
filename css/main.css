@@ -193,9 +193,11 @@ video#introVideo {
 @keyframes spin1 { from { transform:rotate(0deg); } to { transform:rotate(90deg); }}
 @keyframes spin0 { from { transform:rotate(0deg); } to { transform:rotate(145deg); }}
 
+.divAudio {
+    height:32px;
+}
 #audioWetter {
     width:100%;
-    background-color: black;
 }
 
 /* Wettbewerb Formular */
