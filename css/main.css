@@ -23,6 +23,11 @@ body {
     margin:0px; 
 }
 
+body.modal-open { 
+    overflow:inherit; 
+    padding-right:inherit !important; 
+}
+
 .browsehappy { /* Wenn zu alter Browser... */
     margin: 0.2em 0;
     background: #ccc;
