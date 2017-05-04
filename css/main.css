@@ -110,6 +110,14 @@ video#introVideo {
       #333 3px,
       #333 6px
     );
+    background-image: -webkit-repeating-linear-gradient(
+        -25deg,  
+        #222,
+        #222 3px,
+        #333 3px,
+        #333 6px
+    ); /* Chrome10+,Safari5.1+ */
+
 }
 
 
