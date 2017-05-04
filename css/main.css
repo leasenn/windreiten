@@ -221,7 +221,7 @@ video#introVideo {
     margin-top: 15px;
 }
 
-button.mdlButton, button#wettbewerbabschicken {
+button.mdlButton, button#wettbewerbabschicken, #btnStadt {
     background-image: url('../img/Button.png');
     background-repeat: no-repeat;
     background-position: center center;
@@ -230,13 +230,13 @@ button.mdlButton, button#wettbewerbabschicken {
     height:auto;
     display: inline-block;
     border-width: 0;
-    color:#fff;
+    color:#363636;
     padding: 12px 24px;
     font-size: 16px;
     
 }
 
-#btnStadt {
+/*#btnStadt {
     background-image: url('../img/Button.png');
     background-repeat: no-repeat;
     background-position: center center;
@@ -245,12 +245,22 @@ button.mdlButton, button#wettbewerbabschicken {
     height:auto;
     display: inline-block;
     border-width: 0;
-    color:#fff;
+    color:#363636;
 
+}*/
+
+button.mdlButton:hover, button#wettbewerbabschicken:hover, #btnStadt {
+    color:#000;
 }
 
 .mdlButton:focus {
     outline: #363636 solid 1px;
+}
+
+#inputStadt {
+    padding: 10px 10px;
+    font-size: 16px;
+    border-radius: 4px
 }
 
 
@@ -341,6 +351,12 @@ button.mdlButton, button#wettbewerbabschicken {
     
     .section103 { /* Ballon scrollen */ 
         padding:20px;
+    }
+    
+    .section104 { /* Fullscreen Text & Fotos > inverted (Impressum) */
+        padding: 20px;
+        background-color: #353535;
+        color:white;
     }
     .team {
         text-align: center;
@@ -442,7 +458,11 @@ button.mdlButton, button#wettbewerbabschicken {
         padding-right:100px;
         padding-top: 50px;  
     }
-    
+    .section104 { /* Fullscreen Text & Fotos > inverted (Impressum) */
+        padding: 100px;
+        background-color: #353535;
+        color:white;
+    }
     
     .introtext {
         opacity: 0;

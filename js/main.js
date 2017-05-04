@@ -102,17 +102,36 @@ $(document).ready(function(){
         //.addIndicators({name:"Korbtext", indent:400})
         .addTo(controller);
         
+        //********************************************
+        // Team Abschnitt interaktiv
+        //********************************************
+        $(".teamimage").hover(function() {
+            var originalsrc = $(this).attr('src').slice(0,-4); // Add _hover
+            $(this).attr('src', originalsrc+'_hover.png');
+        }, function() {
+            var originalsrc = $(this).attr('src').slice(0,-10); // Remove _hover
+            $(this).attr('src', originalsrc+'.png');
+        });
+
+        $(".teamimage").click(function() {
+            $(this).nextAll('.modal').modal('show');
+            var name = "#mdl"+$(this).attr("id").slice(3); // Herausfinden, welche Person geklickt wurde
+            $(name).modal('show');
+        });
+
+        
     } else { // Ist Touchdevice
 
         // Sichtbare Formatierung forcieren
         $(".introtext").css("opacity",1);
         $(".team").css("opacity",1);
+        $(".pBallon").css("opacity",1);
         //$("#vorstellung-02").css("width","auto");
         
         // Warnung
         $("#intro-01").prepend('<div class="alert alert-warning" role="alert">Diese Seite ist optimiert für Desktops. F&uuml;r das beste Nutzererlebnis besuche diese Seite von einem Computer aus.</div>');
         
-        $("#ballontext").append('<div class="alert alert-warning" role="alert">Um dich w&auml;hrend der Ballonfahrt im 360°-Video zu bewegen, <a href="https://www.youtube.com/watch?v=v6rcuyeIsRY" target="_blank">&ouml;ffne das Video in der YouTube App</a> oder wechsle an einen Computer.</div>');
+        $("#fahrt-05").prepend('<div class="alert alert-warning" style="margin:20px" role="alert">Um dich w&auml;hrend der Ballonfahrt im 360°-Video zu bewegen, <a href="https://www.youtube.com/watch?v=v6rcuyeIsRY" target="_blank">&ouml;ffne das Video in der YouTube App</a> oder wechsle an einen Computer.</div>');
         
         $(".modal").each(function() {
             var videoUrl = $(this).find("iframe").attr('src');
@@ -234,22 +253,6 @@ function isTouchDevice() {
 
 }
 
-//********************************************
-// Team Abschnitt interaktiv
-//********************************************
-$(".teamimage").hover(function() {
-    var originalsrc = $(this).attr('src').slice(0,-4); // Add _hover
-    $(this).attr('src', originalsrc+'_hover.png');
-}, function() {
-    var originalsrc = $(this).attr('src').slice(0,-10); // Remove _hover
-    $(this).attr('src', originalsrc+'.png');
-});
-
-$(".teamimage").click(function() {
-    $(this).nextAll('.modal').modal('show');
-    var name = "#mdl"+$(this).attr("id").slice(3); // Herausfinden, welche Person geklickt wurde
-    $(name).modal('show');
-});
 
 //********************************************
 // YouTube Videos einbinden
