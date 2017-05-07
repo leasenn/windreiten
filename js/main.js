@@ -44,10 +44,19 @@ $(document).ready(function(){
         //.addIndicators()
         .addTo(controller);
         
+        // Hülle anpinnen (nicht sichtbar)
+        var pinHuelleScene = new ScrollMagic.Scene({
+            triggerElement: '#ballonscroll',
+            triggerHook: 0,
+            duration: "1"
+        })
+        .setPin('#img1', {pushFollowers: false})
+        .addTo(controller);
+        
         // Hülletext einfaden
         var pinHuelleTextScene = new ScrollMagic.Scene({
             triggerElement: '#ballonscroll',
-            triggerHook: 0.2
+            triggerHook: 0.3
         })
         .setClassToggle('#p1', 'fade-in')
         //.addIndicators({name:"Hülletext", indent:400})
@@ -56,7 +65,7 @@ $(document).ready(function(){
         // Brenner anpinnen
         var pinBrennerScene = new ScrollMagic.Scene({
             triggerElement: '#ballonscroll',
-            triggerHook: 0.1, 
+            triggerHook: 0.2, 
             duration: '70'
         })
         .setPin('#img2', {pushFollowers: false})
@@ -66,7 +75,7 @@ $(document).ready(function(){
         // Brennertext einfaden
         var pinBrennerTextScene = new ScrollMagic.Scene({
             triggerElement: '#ballonscroll',
-            triggerHook: 0.1
+            triggerHook: 0.2
         })
         .setClassToggle('#p2', 'fade-in')
         //.addIndicators({name:"Brennertext", indent:400})
@@ -77,7 +86,7 @@ $(document).ready(function(){
         // Korb anpinnen
         var pinKorb1Scene = new ScrollMagic.Scene({
             triggerElement: '#ballonscroll',
-            triggerHook: 0.1, 
+            triggerHook: 0.2, 
             duration: '70'
         })
         .setPin('#img3', {pushFollowers: false})
@@ -86,7 +95,7 @@ $(document).ready(function(){
 
         var pinKorb2Scene = new ScrollMagic.Scene({
             triggerElement: '#ballonscroll',
-            triggerHook: 0.0, 
+            triggerHook: 0.1, 
             duration: '35'
         })
         .setPin('#img3', {pushFollowers: false})
@@ -96,7 +105,7 @@ $(document).ready(function(){
         // Korbtext einfaden
         var pinKorbTextScene = new ScrollMagic.Scene({
             triggerElement: '#ballonscroll',
-            triggerHook: 0.0
+            triggerHook: 0.1
         })
         .setClassToggle('#p3', 'fade-in')
         //.addIndicators({name:"Korbtext", indent:400})
@@ -446,20 +455,13 @@ function berechneStadt() {
         },
         success: function(data) {
             tachoAusfuellen(data);
-            /*
-            var tr = document.createElement("tr");
-            $(tr).attr("id",data.id);
-            $(tr).append('<td class="city-name">' + data.name + ', ' + data.sys.country + '</td>');
-            $(tr).append('<td class="temperature">' + (Math.round(data.main.temp*10)/10) + ' °C</td>');
-            $(tr).append('<td><img src="img/' + data.weather[0].icon + '.png" /></td>');
-            $(tr).append('<td><button>Hinzufügen</button></td>');
-            $("#search-result table").append($(tr));*/
+            $("#inputStadt").val(""); // Inputfeld zurücksetzen
+
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log("error requesting cityweather");
         }
     });
-    $("#inputStadt").val(""); // Inputfeld zurücksetzen
 }
 
 // Tacho ausfüllen
