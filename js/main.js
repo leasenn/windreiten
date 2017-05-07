@@ -56,7 +56,7 @@ $(document).ready(function(){
         // Hülletext einfaden
         var pinHuelleTextScene = new ScrollMagic.Scene({
             triggerElement: '#ballonscroll',
-            triggerHook: 0.3
+            triggerHook: 0.2
         })
         .setClassToggle('#p1', 'fade-in')
         //.addIndicators({name:"Hülletext", indent:400})
@@ -65,7 +65,7 @@ $(document).ready(function(){
         // Brenner anpinnen
         var pinBrennerScene = new ScrollMagic.Scene({
             triggerElement: '#ballonscroll',
-            triggerHook: 0.2, 
+            triggerHook: 0.1, 
             duration: '70'
         })
         .setPin('#img2', {pushFollowers: false})
@@ -75,7 +75,7 @@ $(document).ready(function(){
         // Brennertext einfaden
         var pinBrennerTextScene = new ScrollMagic.Scene({
             triggerElement: '#ballonscroll',
-            triggerHook: 0.2
+            triggerHook: 0.1
         })
         .setClassToggle('#p2', 'fade-in')
         //.addIndicators({name:"Brennertext", indent:400})
@@ -86,7 +86,7 @@ $(document).ready(function(){
         // Korb anpinnen
         var pinKorb1Scene = new ScrollMagic.Scene({
             triggerElement: '#ballonscroll',
-            triggerHook: 0.2, 
+            triggerHook: 0.1, 
             duration: '70'
         })
         .setPin('#img3', {pushFollowers: false})
@@ -95,7 +95,7 @@ $(document).ready(function(){
 
         var pinKorb2Scene = new ScrollMagic.Scene({
             triggerElement: '#ballonscroll',
-            triggerHook: 0.1, 
+            triggerHook: 0, 
             duration: '35'
         })
         .setPin('#img3', {pushFollowers: false})
@@ -105,7 +105,7 @@ $(document).ready(function(){
         // Korbtext einfaden
         var pinKorbTextScene = new ScrollMagic.Scene({
             triggerElement: '#ballonscroll',
-            triggerHook: 0.1
+            triggerHook: 0
         })
         .setClassToggle('#p3', 'fade-in')
         //.addIndicators({name:"Korbtext", indent:400})
@@ -148,6 +148,11 @@ $(document).ready(function(){
         $("#btnPilot").replaceWith('<iframe src="https://www.youtube.com/embed/ZNUXHjznens?autoplay=1&rel=0" frameborder="0" class="iframeTeam" allowfullscreen></iframe>');
         $("#btnPassagier").replaceWith('<iframe src="https://www.youtube.com/embed/UlFKQac5rUI?autoplay=1&rel=0" frameborder="0" class="iframeTeam" allowfullscreen></iframe>');
         $("#btnVerfolger").replaceWith('<iframe src="https://www.youtube.com/embed/PvdXV1EfYp4?autoplay=1&rel=0" frameborder="0" class="iframeTeam" allowfullscreen></iframe>');
+        
+        // Trennlinien zwischen Teammitgliedern
+        $("#team-pilot").css("padding-bottom", "30px");
+        $("#team-passagier").css("padding-bottom", "30px");
+        
 
     }
     
