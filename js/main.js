@@ -143,13 +143,12 @@ $(document).ready(function(){
         $("#fahrt-05").prepend('<div class="alert alert-warning" style="margin:20px" role="alert">Um dich w&auml;hrend der Ballonfahrt im 360°-Video zu bewegen, <a href="https://www.youtube.com/watch?v=v6rcuyeIsRY" target="_blank">&ouml;ffne das Video in der YouTube App</a> oder wechsle an einen Computer.</div>');
         
         $(".modal").each(function() {
-            var videoUrl = $(this).find("iframe").attr('src');
-            $(this).removeClass("modal fade");
-            $(this).removeAttr("tabindex role aria-hidden aria-labelledby");
-            var selector = "button[data-target='#"+$(this).attr("id")+"']";
-            $(selector).replaceWith('<iframe src="'+videoUrl+'" frameborder="0" class="iframeTeam" allowfullscreen></iframe>');
-            $(this).remove();
+            $(this).remove(); 
         });
+        $("#btnPilot").replaceWith('<iframe src="https://www.youtube.com/embed/ZNUXHjznens?autoplay=1&rel=0" frameborder="0" class="iframeTeam" allowfullscreen></iframe>');
+        $("#btnPassagier").replaceWith('<iframe src="https://www.youtube.com/embed/UlFKQac5rUI?autoplay=1&rel=0" frameborder="0" class="iframeTeam" allowfullscreen></iframe>');
+        $("#btnVerfolger").replaceWith('<iframe src="https://www.youtube.com/embed/PvdXV1EfYp4?autoplay=1&rel=0" frameborder="0" class="iframeTeam" allowfullscreen></iframe>');
+
     }
     
     
@@ -209,13 +208,13 @@ $(document).ready(function(){
     var modalData = [
       { 
           name: "Pilot",
-          src: "https://www.youtube.com/embed/1TJeLbJXbLI?autoplay=1&rel=0"
+          src: "https://www.youtube.com/embed/ZNUXHjznens?autoplay=1&rel=0"
       }, { 
           name: "Passagier",
-          src: "https://www.youtube.com/embed/EBTajFzmfCU?autoplay=1&rel=0"
+          src: "https://www.youtube.com/embed/UlFKQac5rUI?autoplay=1&rel=0"
       }, { 
           name: "Verfolger",
-          src: "https://www.youtube.com/embed/1FQ_bCpFl0o?autoplay=1&rel=0"
+          src: "https://www.youtube.com/embed/PvdXV1EfYp4?autoplay=1&rel=0"
       }
     ];
     
