@@ -122,8 +122,13 @@ if ($response != null && $response->success) { // When Recaptcha erfolgreich ver
         die();
     }
 
-
-
+    if (!mysqli_set_charset($conn, "utf8")) {
+        $output["success"] = 0;
+        $output["message"] = "Error loading character set utf8: %s\n";
+        echo json_encode($output);
+        die();
+    } 
+    
     //insert
     // prepare and bind
     $stmt2 = $conn->prepare("INSERT INTO wettbewerb (vorname, name, adresse, plz, ort, land, email) VALUES (?, ?, ?, ?, ?, ?, ?)");
