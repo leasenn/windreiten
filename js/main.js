@@ -140,7 +140,7 @@ $(document).ready(function(){
         // Warnung
         $("#intro-01").prepend('<div class="alert alert-warning" role="alert">Diese Seite ist optimiert für Desktops. F&uuml;r das beste Nutzererlebnis besuche diese Seite von einem Computer aus.</div>');
         
-        $("#fahrt-05").prepend('<div class="alert alert-warning" style="margin:20px" role="alert">Um dich w&auml;hrend der Ballonfahrt im 360°-Video zu bewegen, <a href="https://www.youtube.com/watch?v=v6rcuyeIsRY" target="_blank">&ouml;ffne das Video in der YouTube App</a> oder wechsle an einen Computer.</div>');
+        $("#wetter-05a").append('<div class="alert alert-warning" style="margin:20px" role="alert">Um dich w&auml;hrend der Ballonfahrt im 360°-Video zu bewegen, <a href="https://www.youtube.com/watch?v=v6rcuyeIsRY" target="_blank">&ouml;ffne das Video in der YouTube App</a> oder wechsle an einen Computer.</div>');
         
         $(".modal").each(function() {
             $(this).remove(); 
@@ -149,6 +149,10 @@ $(document).ready(function(){
         $("#btnPassagier").replaceWith('<iframe src="https://www.youtube.com/embed/UlFKQac5rUI?autoplay=1&rel=0" frameborder="0" class="iframeTeam" allowfullscreen></iframe>');
         $("#btnVerfolger").replaceWith('<iframe src="https://www.youtube.com/embed/PvdXV1EfYp4?autoplay=1&rel=0" frameborder="0" class="iframeTeam" allowfullscreen></iframe>');
 
+    }
+    
+    if(navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) { // Wenn Safari 360° Meldung einbauen
+        $("#wetter-05a").append('<div class="alert alert-warning" style="margin:20px" role="alert">Safari kann zurzeit keine 360° Videos darstellen. Versuche es mit einem anderen Browser.</div>');
     }
     
     
@@ -241,11 +245,9 @@ $(document).ready(function(){
                 results = $.ui.autocomplete.filter(results, request.term);
                 response(results.slice(0,5));
             },
-            select: function() {
-                console.log("selected");
-                berechneStadt();
+            select: function(event, item) {
+                berechneStadt(item.item.value);
             }
-            //source: '{"test1","london","lavin","las vegas"}'
         });
     }).fail(function() {
         console.log("Loading json failed");
@@ -437,18 +439,18 @@ function berechneWetter() {
 
 $("#btnStadt").click(function(event) {
     event.preventDefault();
-    berechneStadt();
+    berechneStadt($("#inputStadt").val());
 });
 
 // Berechne Stadt (nach Click auf Button oder Click auf Auswahl bei Autocomplete)
-function berechneStadt() {
+function berechneStadt(stadt) {
     $.ajax({
         url: 'http://api.openweathermap.org/data/2.5/weather',
         dataType: "json",
         type: "GET",
         data: {
             units: "metric",
-            q: $("#inputStadt").val(),
+            q: stadt,
             lang: 'de',
             APPID: "a9fb7b1bd2ebc0438c97fae9a24ff62c"
         },
@@ -469,7 +471,7 @@ function tachoAusfuellen(data) {
     var date = new Date(data.dt*1000);
 
     // Wettermeta in Statusabsatz
-    $("#wetterStatus").html('Das Wetter für '+data.name+' ('+data.sys.country+') vom ' + date.getDate() + "." + (date.getMonth()+1) +"." + date.getFullYear() + " um " + date.getHours() + ":" + date.getMinutes() + ' Uhr');
+    $("#wetterStatus").html('Das Wetter für '+data.name+' ('+data.sys.country+') vom ' + date.getDate() + "." + (date.getMonth()+1) +"." + date.getFullYear() + " um " + date.getHours() + ":" + (date.getMinutes()<10?'0':'') + date.getMinutes()  + ' Uhr');
 
     $("#wetterInfo").html(""); // Leeren
     // Wetterinfo ausfüllen
