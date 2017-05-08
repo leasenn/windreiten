@@ -127,6 +127,12 @@ $(document).ready(function(){
             var name = "#mdl"+$(this).attr("id").slice(3); // Herausfinden, welche Person geklickt wurde
             $(name).modal('show');
         });
+        
+        // Wenn Safari 360° Meldung einbauen
+        if(navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) { 
+            $("#wetter-05a").append('<div class="alert alert-warning" style="margin:20px" role="alert">Safari kann zurzeit keine 360° Videos darstellen. Versuche es mit einem anderen Browser.</div>');
+        }
+
 
         
     } else { // Ist Touchdevice
@@ -154,10 +160,6 @@ $(document).ready(function(){
         $("#team-passagier").css("padding-bottom", "30px");
         
 
-    }
-    
-    if(navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) { // Wenn Safari 360° Meldung einbauen
-        $("#wetter-05a").append('<div class="alert alert-warning" style="margin:20px" role="alert">Safari kann zurzeit keine 360° Videos darstellen. Versuche es mit einem anderen Browser.</div>');
     }
     
     
@@ -289,7 +291,7 @@ function onYouTubePlayerAPIReady() {
             autoplay : 0
             /*controls : 0, später wieder einschalten!*/
         },
-        videoId: 'XsEItOvDZzE'
+        videoId: 'Ug4VsxS2Hos'
     });
         
     player360 = new YT.Player('yt-vorstellung-360', {
