@@ -260,6 +260,11 @@ $(document).ready(function(){
         console.log("Loading json failed");
     });
     
+    $("#inputStadt").keydown(function(event){
+    if(event.keyCode == 13){
+        $("#btnStadt").click();
+    }
+});
     
 });
 
